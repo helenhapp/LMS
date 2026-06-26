@@ -1,0 +1,2165 @@
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🅰️ ШРИФТ ДЛЯ ЛЮДЕЙ З ДИСЛЕКСІЄЮ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+/* Regular Weight */
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("./media/fonts/OpenDyslexic-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold Weight */
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("./media/fonts/OpenDyslexic-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Italic */
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("./media/fonts/OpenDyslexic-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Bold Italic */
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("./media/fonts/OpenDyslexic-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Mono */
+@font-face {
+  font-family: "OpenDyslexicMono";
+  src: url("./media/fonts/OpenDyslexicMono-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body.dyslexia-mode * {
+  font-family: "OpenDyslexic", sans-serif !important;
+  letter-spacing: normal !important;
+}
+
+body.dyslexia-mode code,
+body.dyslexia-mode code *,
+body.dyslexia-mode pre,
+body.dyslexia-mode pre *,
+body.dyslexia-mode .CodeMirror,
+body.dyslexia-mode .CodeMirror *,
+body.dyslexia-mode .custom-editor-input,
+body.dyslexia-mode .custom-editor-output {
+  font-family: "Fira Code", monospace !important;
+}
+
+body.dyslexia-mode h1 {
+  font-family: "Tektur", sans-serif !important;
+  letter-spacing: 3px !important;
+}
+
+#dyslexia-mode-btn,
+body.dyslexia-mode .top-bar * {
+  font-family: "Fira Sans", sans-serif !important;
+}
+
+body.dyslexia-mode h2,
+body.dyslexia-mode h3 {
+  font-size: 18px;
+}
+
+body.dyslexia-mode .task ul,
+body.dyslexia-mode .task ol {
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+body.dyslexia-mode .objective {
+  font-size: 14px;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌼 1. ЗМІННІ ТЕМИ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+/* Світла Тема */
+:root {
+  interpolate-size: allow-keywords;
+
+  /* Брендові кольори */
+  --brand1: #2f4858;
+  --brand2: #336699;
+  --brand3: #9ee493;
+  --brand4: #86bbd8;
+  --brand5: #daf7dc;
+  --brand6: #309d20;
+
+  --top-bar-shadow: 0 0 2px rgba(134, 187, 216, 0.8);
+
+  /* Фони */
+  --bg1: #f7fffb;
+  --bg2: #ebfbef;
+  --panel: #ffffff;
+  --panel-alt: var(--brand5);
+  --hover-bg: #e1f2f8;
+  --code-bg: #f2f7f9;
+
+  /* Напівпрозорі заливки */
+  --link-bg: rgba(51, 102, 153, 0.1);
+  --soft-callout: rgba(134, 187, 216, 0.15);
+  --bar-bg: var(--panel);
+
+  /* Перемикачі */
+  --toggle: var(--brand4);
+  --toggle2: #ffffff;
+  --toggle-border: var(--brand2);
+
+  /* Текст і посилання */
+  --text-main: #1a2831;
+  --text-soft: #4a6778;
+  --title: var(--brand1);
+  --link-color: var(--brand2);
+  --header-link-bg: transparent;
+
+  /* Акценти та рамки */
+  --accent: var(--brand4);
+  --accent-pop: var(--brand6);
+  --accordion-border: var(--brand4);
+  --tab-border: var(--brand4);
+  --code-border: var(--brand4);
+
+  /* Тіні */
+  --shadow-accent: rgba(47, 72, 88, 0.08);
+  --title-shadow: 2px 2px 0 var(--brand4);
+  --btn-shadow: 2px 2px 0 var(--brand3);
+  --code-shadow: 0 4px 12px var(--shadow-accent);
+  --accordion-drop-shadow: 2px 2px 0 var(--brand3);
+
+  /* Скролбари */
+  --scrollbar-track: var(--bg1);
+  --scrollbar-thumb: var(--brand4);
+  --scrollbar-thumb-hover: var(--brand2);
+}
+
+/* Темна тема */
+[data-theme="dark"] {
+  --brand2: #294c6e;
+  --brand6: #7ac972;
+
+  --top-bar-shadow: 0 0 2px rgba(34, 73, 95, 0.8);
+
+  /* Фони */
+  --bg1: #0d151a;
+  --bg2: #142129;
+  --panel: #13212a;
+  --panel-alt: #172d3b;
+  --hover-bg: #2f4858;
+  --code-bg: #090e12;
+  --soft-callout: rgba(51, 102, 153, 0.2);
+  --link-bg: rgba(158, 228, 147, 0.1);
+  --bar-bg: var(--panel);
+
+  /* Перемикачі */
+  --toggle: var(--bg2);
+  --toggle2: var(--brand3);
+  --toggle-border: var(--accordion-border);
+
+  /* Текст та посилання */
+  --text-main: #e2f0f4;
+  --text-soft: var(--brand5);
+  --title: var(--brand5);
+  --link-color: var(--brand3);
+  --header-link-bg: transparent;
+
+  /* Рамки та акценти */
+  --accent: var(--brand2);
+  --accent-pop: var(--brand3);
+  --accordion-border: var(--brand2);
+  --tab-border: var(--brand2);
+  --code-border: var(--brand2);
+
+  /* Ефекти та тіні */
+  --shadow-accent: rgba(0, 0, 0, 0.4);
+  --title-shadow: 2px 2px 0 var(--brand2);
+  --btn-shadow: 0 0 4px var(--accent);
+  --code-shadow: 0 6px 15px var(--shadow-accent);
+  --accordion-drop-shadow: 2px 2px 0 var(--brand2);
+
+  /* Скролбари */
+  --scrollbar-track: var(--bg1);
+  --scrollbar-thumb: var(--brand2);
+  --scrollbar-thumb-hover: var(--brand4);
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌿 2. CSS RESET ТА БАЗОВІ СТИЛІ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--text-main);
+  font-family: "Fira Sans", sans-serif;
+  min-height: 100dvh;
+  padding-top: 0;
+  background-color: var(--bg1);
+  font-size: 17px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+}
+
+/* Градієнтний фон */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+  z-index: -1;
+}
+
+main,
+header {
+  width: 92%;
+  max-width: 1000px;
+}
+
+main {
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+.icon img {
+  border: none;
+  margin: 0;
+  width: 20px;
+}
+
+code,
+pre,
+.custom-editor-input,
+.custom-editor-output,
+textarea {
+  font-variant-ligatures: none;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌸 3. АНІМАЦІЇ ПЕРЕХОДІВ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+body,
+h1,
+h2,
+h3,
+hr,
+b,
+.accent,
+header a {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    text-shadow 0.4s ease;
+}
+
+.scroll-to-top,
+summary,
+.toggle-switch,
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🍀 4. ТЕКСТ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+/* Віджет швидкого переходу (Table of Contents) */
+.toc-box {
+  background-color: var(--soft-callout);
+  border: 1px solid var(--accordion-border);
+  border-radius: 6px;
+  padding: 15px 20px;
+  margin: 20px 0;
+}
+
+.toc-title {
+  margin: 0;
+}
+
+.subsection-nav ul {
+  list-style-type: square;
+  padding-left: 0;
+  margin: 5px 15px;
+  line-height: 1.6;
+}
+
+.subsection-nav li a {
+  color: var(--text-main);
+  width: 100%;
+  display: block;
+}
+
+.subsection-nav li a:hover {
+  color: var(--accent-pop);
+  text-decoration: underline;
+}
+
+body.dyslexia-mode .subsection-nav ul {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+[id] {
+  scroll-margin-top: 80px;
+}
+
+h1 {
+  font-family: "Tektur", sans-serif;
+  margin: 15px 0;
+  color: var(--title);
+  text-shadow: var(--title-shadow);
+  line-height: 1.5;
+  letter-spacing: 3px;
+  font-size: clamp(2.2rem, 6.9vw, 3rem);
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  font-weight: 700;
+}
+
+h2,
+h3 {
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+h2 {
+  margin-top: 40px;
+  color: var(--accent);
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: var(--brand2);
+}
+
+h4 {
+  font-family: "Tektur", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0.7rem 0;
+  color: var(--text-soft);
+}
+
+h5 {
+  font-size: 15px;
+}
+
+p.topic {
+  text-align: center;
+  font-weight: 600;
+  color: var(--accent-pop);
+  margin: 0;
+  line-height: 1.4;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+}
+
+.accent {
+  color: var(--accent-pop);
+  font-weight: bold;
+}
+
+.accent-string {
+  background-color: var(--soft-callout);
+  padding: 2px 4px;
+}
+
+pre.accent-string {
+  background-color: var(--panel-alt);
+  padding: 5px 7px;
+  border-radius: 3px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 10px 20px;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌺 5. ПОСИЛАННЯ ТА ЗОБРАЖЕННЯ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+a {
+  color: var(--text-main);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-pop);
+}
+
+a:hover img {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.accordion__header h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+img.star {
+  display: inline-block;
+  width: 38px;
+  border: none;
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  max-height: 380px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: 15px auto;
+  border: 3px solid var(--code-border);
+  border-radius: 6px;
+  transition:
+    transform 0.4s ease,
+    border-color 0.4s ease;
+}
+
+/* Маленькі картинки для завдань */
+img.tiny-image {
+  display: inline-block;
+  max-width: 170px;
+  max-height: 170px;
+  margin: 15px 0;
+  border-width: 2px;
+  vertical-align: middle;
+  background-color: var(--panel-alt);
+  border-radius: 0;
+}
+a:hover img.tiny-image {
+  transform: scale(1.05) translateY(-2px);
+  border-color: var(--accent-pop);
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🍃 6. КНОПКИ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+button {
+  background-color: var(--panel-alt);
+  color: var(--text-main);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-family: "Tektur", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+button:hover {
+  background-color: var(--hover-bg);
+  color: var(--text-soft);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Кнопка повернення на початок сторінки */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--panel-alt);
+  border: 2px solid var(--accent);
+  box-shadow: var(--btn-shadow);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  user-select: none;
+  padding: 8px;
+}
+.scroll-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.scroll-to-top:hover {
+  background-color: var(--hover-bg);
+  transform: translateY(-5px);
+}
+.scroll-to-top img {
+  border: none;
+  margin: 0;
+}
+
+/* Вкладки для частин уроку */
+.tabs-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.tab-btn {
+  flex: 1 1 0%;
+  padding: 10px 15px;
+  border: 2px outset var(--tab-border);
+  opacity: 0.75;
+  text-align: center;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--text-main);
+}
+.tab-btn:hover {
+  background-color: var(--panel-alt);
+  opacity: 1;
+  transform: scale(1.02);
+}
+.tab-btn:active {
+  transform: scale(0.93);
+}
+.tab-btn.active {
+  border-style: inset;
+  transform: scale(0.97);
+  opacity: 0.9;
+  background-color: var(--hover-bg);
+  color: var(--text-main);
+  pointer-events: none;
+}
+.tab-content {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+    transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Стан 1: Вкладка присутня в документі (але ще прозора) */
+.tab-content.active {
+  display: block;
+}
+
+/* Стан 2: Вкладка плавно стає видимою */
+.tab-content.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Кнопка для завантаження файлів */
+.download-buttons {
+  margin: 15px 0;
+}
+
+.download-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background-color: var(--soft-callout);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--text-main);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.download-button:hover {
+  background-color: var(--hover-bg);
+  transform: translateY(-2px);
+  color: var(--text-main);
+  box-shadow: var(--btn-shadow);
+}
+.download-button:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+.file-name {
+  font-family: "Fira Code", monospace;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+}
+.download-arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+.download-arrow img {
+  border: none;
+  margin: 0;
+  width: 35px;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌻 7. СПИСКИ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+ul,
+ol {
+  padding-left: 10px;
+  line-height: 1.6;
+}
+
+ul li::marker,
+ol li::marker {
+  color: var(--accent-pop);
+  font-weight: bold;
+}
+
+ol,
+ul {
+  margin: 0 10px;
+}
+
+li::marker {
+  color: var(--accent);
+}
+
+li.test {
+  list-style-type: none;
+  margin-left: -1.5rem;
+}
+
+.lesson-links {
+  list-style-type: square;
+  line-height: 1.7;
+  letter-spacing: 1px;
+  font-size: 18px;
+}
+
+.lesson-links li::marker {
+  color: var(--text-main);
+}
+.flex-ol {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌱 8. ТАБЛИЦІ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+div.tablecontainer {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--soft-callout);
+}
+
+tr:hover {
+  background-color: var(--hover-bg);
+}
+
+tr:hover td pre:has(code),
+tr:hover td code {
+  border-color: var(--accent-pop);
+}
+
+th,
+td {
+  padding: 15px;
+  border: 2px solid var(--accent);
+  text-align: left;
+  line-height: 1.6;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  min-width: 150px;
+}
+
+th {
+  background-color: var(--panel-alt);
+  color: var(--text-soft);
+  font-family: "Tektur", sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+td code {
+  display: inline-block;
+  padding: 7px 10px;
+  margin: 0;
+  border-width: 2px;
+  box-shadow: none;
+  font-size: 15px;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌷 9. КОМПОНЕНТИ МАКЕТУ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+/* Верхня панель та логотип */
+.top-bar,
+footer {
+  height: 52px;
+}
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  background-color: var(--bar-bg);
+  filter: drop-shadow(var(--top-bar-shadow));
+}
+#nav-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: box-shadow 0.3s ease;
+}
+#nav-container.scrolled {
+  border-bottom: 1px solid var(--hover-bg);
+  box-shadow: 0 4px 0 var(--soft-callout);
+}
+.top-bar__controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-container {
+  justify-self: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.site-logo {
+  margin: 0;
+  height: 65px;
+  padding: 8px 0;
+  width: auto;
+  object-fit: contain;
+  border: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Перемикач теми */
+.toggle-switch {
+  justify-self: end;
+  position: relative;
+  display: inline-block;
+  width: 65px;
+  min-width: 65px;
+  height: 32px;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--toggle);
+  border: 2px solid var(--toggle-border);
+  border-radius: 32px;
+  transition: all 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: var(--toggle2);
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+.icon {
+  z-index: 1;
+  user-select: none;
+  transition: opacity 0.3s ease;
+}
+.sun {
+  padding-left: 2px;
+  opacity: 0;
+}
+.moon {
+  padding-right: 3px;
+  opacity: 1;
+}
+input:checked + .slider .sun {
+  opacity: 1;
+}
+input:checked + .slider .moon {
+  opacity: 0;
+}
+input:checked + .slider::before {
+  transform: translate(32px, -50%);
+}
+
+/* Хедер */
+header {
+  padding: 30px 0;
+  padding-bottom: 0;
+  text-align: center;
+  font-family: "Tektur", sans-serif;
+  font-optical-sizing: auto;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+header h2 {
+  color: var(--text-main);
+}
+
+/* КОНТЕЙНЕР ЗАГОЛОВКА ТА СТРІЛОК */
+.title-container {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 15px;
+}
+.title-container h1 {
+  grid-column: 2;
+  margin: 0;
+}
+header a.nav-arrow {
+  min-width: auto;
+  font-size: 24px;
+  padding: 5px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "OpenDyslexic", sans-serif;
+  letter-spacing: 0;
+}
+header a.nav-arrow:hover {
+  transform: scale(1.2);
+  background-color: transparent;
+}
+.nav-arrow img {
+  width: 38px;
+  border: none;
+  margin: 0;
+}
+.prev-arrow {
+  grid-column: 1;
+  justify-self: end;
+}
+.next-arrow {
+  grid-column: 3;
+  justify-self: start;
+}
+
+/* Випадаючі списки */
+.accordion {
+  margin: 30px auto;
+}
+.accordion p {
+  margin: 15px 0;
+}
+.accordion__item {
+  margin-bottom: 15px;
+  background: var(--panel);
+  transition: all 0.4s ease;
+  position: relative;
+  border: solid var(--accordion-border);
+  border-width: 0 2px;
+  border-radius: 0;
+}
+.accordion__item::before,
+.accordion__item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accordion-border);
+  transition: background 0.4s ease;
+}
+.accordion__item::before {
+  top: -2px;
+}
+.accordion__item::after {
+  bottom: -2px;
+}
+.accordion__item::details-content {
+  height: 0;
+  overflow: hidden;
+  transition:
+    height 0.4s ease-out,
+    content-visibility 0.4s ease-out;
+  transition-behavior: allow-discrete;
+}
+.accordion__item[open]::details-content {
+  height: auto;
+}
+.accordion__header {
+  padding: 17px;
+  line-height: 1.3;
+  background: var(--panel-alt);
+  color: var(--brand2);
+  font-family: "Tektur", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease;
+  list-style: none;
+}
+.accordion__header > h2 {
+  margin: 0;
+  font-family: inherit;
+  line-height: 1.4;
+  transform: translateY(-2px);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--accent-pop);
+}
+.accordion__header .star {
+  font-size: 20px;
+  display: inline-block;
+}
+.star {
+  transform: translateY(-2px);
+  text-shadow: none;
+}
+[data-theme="dark"] h3,
+[data-theme="dark"] .accordion__header {
+  color: var(--brand4);
+}
+.accordion__header::-webkit-details-marker {
+  display: none;
+}
+.accordion__header:hover {
+  background: var(--hover-bg);
+}
+.acc-arrow {
+  transition: transform 0.3s ease;
+  font-family: monospace;
+  font-size: 15px;
+}
+.accordion__item[open] .acc-arrow {
+  transform: rotate(90deg);
+}
+.accordion__content {
+  padding: 10px 25px;
+}
+.accordion__content > *:first-child {
+  margin-top: 22px;
+}
+.accordion__content > *:last-child {
+  margin-bottom: 22px;
+}
+
+/* інші стилі для details та summary */
+.answer {
+  margin-left: 10px;
+}
+details {
+  margin: 10px 0;
+}
+summary:focus {
+  outline: none;
+}
+details.answer summary,
+details.task summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+details.answer summary::-webkit-details-marker,
+details.task summary::-webkit-details-marker {
+  display: none;
+}
+details.answer summary::before,
+details.task summary::before {
+  content: "▶";
+  display: inline-block;
+  font-size: 15px;
+  font-family: monospace;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+details.answer[open] summary::before,
+details.task[open] summary::before {
+  transform: rotate(90deg);
+}
+.answer summary,
+.task summary {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+.answer summary:hover,
+.task summary:hover {
+  color: var(--accent-pop);
+}
+.task::details-content {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    height 0.3s ease-out,
+    opacity 0.3s ease-out,
+    content-visibility 0.3s ease-out;
+  transition-behavior: allow-discrete;
+}
+.task[open]::details-content {
+  height: auto;
+  opacity: 1;
+}
+.task {
+  background-color: var(--soft-callout);
+  border: 1px solid var(--accordion-border);
+  border-radius: 6px;
+  margin: 20px 0;
+  transition: background 0.4s ease;
+}
+.task summary {
+  padding: 17px 20px;
+}
+.task > :not(summary) {
+  padding: 0 20px 20px 20px;
+}
+.task ol,
+.task ul {
+  margin-left: 25px;
+  margin-top: 10px;
+}
+.task summary h4 {
+  margin: 0;
+  line-height: 1.4;
+}
+.task:not([open]):hover {
+  background-color: var(--panel-alt);
+}
+[data-theme="dark"] .task:not([open]):hover {
+  background-color: var(--hover-bg);
+}
+.task[open] summary {
+  padding-bottom: 0;
+}
+.task[open] summary:hover h4 {
+  color: var(--accent-pop);
+}
+
+/* Вставки та розділювачі */
+.soft-callout {
+  background-color: var(--soft-callout);
+  border: 1px solid var(--accordion-border);
+  padding: 20px;
+  border-radius: 6px;
+  line-height: 1.6;
+  margin: 20px 0;
+}
+.soft-callout h4 {
+  margin: 0;
+}
+.objective {
+  text-align: left;
+  font-family: "Fira Sans", sans-serif;
+  color: var(--text-soft);
+  background-color: var(--panel-alt);
+  padding: 20px;
+  margin-top: 25px;
+  border-radius: 20px 0;
+}
+.objective ul {
+  margin: 5px;
+  list-style-type: square;
+}
+hr {
+  border: none;
+  margin: 30px auto;
+  opacity: 0.85;
+  border-top: 1px solid var(--accordion-border);
+}
+
+/* "Завіса" для переходу між сторінками */
+.transition-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 1s ease-in-out,
+    visibility 1s ease-in-out;
+}
+body.is-loaded .transition-curtain {
+  opacity: 0;
+  visibility: hidden;
+}
+body.is-leaving .transition-curtain {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🍁 10. КОД */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+pre:has(code) {
+  margin: 15px 0;
+  background-color: var(--code-bg);
+  border: 3px solid var(--code-border);
+  border-radius: 6px;
+  overflow-x: auto;
+  max-height: 450px;
+  overflow-y: auto;
+  transition: all 0.4s ease;
+}
+
+code {
+  display: inline-block;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  margin: 0;
+  font-family: "Fira Code", monospace;
+  color: var(--text-main);
+  background: transparent !important;
+  border: none;
+  white-space: pre !important;
+}
+
+code.long-code {
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+/* Обгортка для кнопки копіювання */
+.code-wrapper {
+  position: relative;
+  margin: 15px 0;
+}
+.code-wrapper pre {
+  margin: 0;
+}
+.code-wrapper .copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 10px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
+}
+.code-wrapper:hover .copy-btn {
+  opacity: 0.65;
+  visibility: visible;
+}
+.code-wrapper .copy-btn:hover {
+  opacity: 1;
+}
+.code-wrapper .copy-btn.copied {
+  background-color: mediumseagreen;
+  color: #ffffff;
+  border-color: var(--accent-pop);
+}
+
+/* Для коду, який не можна копіювати */
+.nocopy {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🍙 11. РЕДАКТОРИ КОДУ (CodeMirror) */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.custom-editor-wrapper {
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid var(--accent);
+  background: var(--code-bg);
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--panel-alt);
+  padding: 8px 15px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.editor-title {
+  font-family: "Tektur", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--text-soft);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.run-btn,
+.reset-btn {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.run-btn:hover,
+.reset-btn:hover {
+  background: transparent;
+  transform: scale(1.1);
+}
+
+.run-btn:active,
+.reset-btn:active {
+  background: transparent;
+  transform: scale(0.9);
+}
+
+.custom-editor-input {
+  width: 100%;
+  min-height: 150px;
+  background: var(--code-bg);
+  color: var(--text-main);
+  font-family: "Fira Code", monospace;
+  font-size: 14px;
+  outline: none;
+  line-height: 1.5;
+  resize: none;
+  white-space: pre;
+  overflow-wrap: normal;
+  border: none;
+  padding: 15px 0 15px 15px;
+  border-right: 15px solid transparent;
+  background-clip: padding-box;
+  overflow-y: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.custom-editor-output {
+  background: var(--panel-alt);
+  color: var(--text-main);
+  border-top: 2px solid var(--accent);
+  margin: 0;
+  padding: 15px;
+  font-family: monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border-radius: 0;
+}
+
+/* Вікно попереднього перегляду для HTML */
+.html-editor-output {
+  width: 100%;
+  min-height: 200px;
+  background-color: #ffffff;
+  border: none;
+  border-top: 2px solid var(--accent);
+  display: block;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🛸 12. ФУТЕР */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+footer {
+  background-color: var(--bar-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+footer p {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🖥️ 13. КНОПКИ ПАНЕЛІ (Спец. шрифт) */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.wide-toggle {
+  width: 32px;
+  border-radius: 5px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 3px;
+  margin: 0;
+  transition: all 0.4s ease;
+  box-shadow: none;
+  font-family: "Fira Sans", sans-serif;
+}
+
+.wide-toggle:hover {
+  background: transparent;
+  transform: scale(1.1);
+}
+
+.wide-toggle img {
+  border: none;
+  margin: 0;
+  border-radius: 0;
+}
+
+body.dyslexia-mode #dyslexia-mode-btn {
+  background-color: var(--hover-bg);
+  border-color: var(--accent);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--toggle-border);
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🛼 14. СКРОЛБАРИ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 10px;
+  border: 3px solid var(--scrollbar-track);
+  transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+pre::-webkit-scrollbar,
+.custom-editor-input::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+pre::-webkit-scrollbar-thumb,
+.custom-editor-input::-webkit-scrollbar-thumb {
+  border-width: 2px;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🎬 15. ВІДЕО */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 711px;
+  aspect-ratio: 16 / 9;
+  margin: 20px auto;
+  border: 3px solid var(--code-border);
+  border-radius: 6px;
+  background-color: var(--code-bg);
+  transition: all 0.4s ease;
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  border: none;
+  object-fit: contain;
+  outline: none;
+  border-radius: 3px;
+}
+
+.video-wrapper.expanded {
+  max-width: 100%;
+}
+
+.video-wrapper.zoomable {
+  margin-bottom: 50px;
+}
+
+.video-zoom-btn {
+  position: absolute;
+  bottom: -42px;
+  right: 0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: var(--panel-alt);
+  border: 2px solid var(--accent);
+  color: var(--text-main);
+  font-family: "Fira Code", monospace;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: var(--btn-shadow);
+  z-index: 10;
+}
+
+.video-zoom-btn:hover {
+  background-color: var(--hover-bg);
+  transform: translateY(-2px);
+}
+
+.video-zoom-btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 👾 16. CodeMirror */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.CodeMirror {
+  height: auto;
+  min-height: 150px;
+  font-family: "Fira Code", monospace;
+  font-size: 14px;
+  background-color: var(--code-bg) !important;
+  color: var(--text-main) !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.CodeMirror-scroll {
+  outline: none !important;
+  min-height: 150px !important;
+  overflow-y: hidden !important;
+}
+
+.CodeMirror-lines {
+  padding: 15px 0 !important;
+}
+
+.CodeMirror pre.CodeMirror-line,
+.CodeMirror pre.CodeMirror-line-like {
+  padding: 0 15px !important;
+}
+
+.CodeMirror-gutters {
+  background-color: var(--panel-alt) !important;
+  border-right: 1px dashed var(--accent) !important;
+  height: 100% !important;
+}
+
+.CodeMirror-linenumber {
+  color: var(--brand4) !important;
+  opacity: 0.8;
+}
+
+.custom-editor-input {
+  display: none;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 📝 17. ТЕСТИ ТА ФОРМИ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.test-question {
+  margin: 20px 0;
+}
+
+.test-question p {
+  font-weight: 600;
+  margin: 20px 0;
+  color: var(--title);
+}
+
+.test-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.test-label:hover {
+  color: var(--accent-pop);
+}
+
+/* Базові стилі для радіо-кнопок ТА чекбоксів */
+.test-radio,
+.test-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border: 2px solid var(--accent);
+  background-color: var(--code-bg);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  margin: 0;
+}
+
+/* Форми */
+.test-radio {
+  border-radius: 50%;
+}
+.test-checkbox {
+  border-radius: 4px;
+}
+
+/* Колір при виборі */
+.test-radio:checked,
+.test-checkbox:checked {
+  border-color: var(--accent-pop);
+}
+
+/* Радіо-кнопка (анімація крапки) */
+.test-radio:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 10px;
+  height: 10px;
+  background-color: var(--accent-pop);
+  border-radius: 50%;
+  animation: popIn 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Чекбокс (анімація галочки) */
+.test-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid var(--accent-pop);
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  animation: popInCheck 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.test-radio:focus-visible,
+.test-checkbox:focus-visible {
+  outline: 2px dashed var(--accent-pop);
+  outline-offset: 3px;
+}
+
+@keyframes popIn {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes popInCheck {
+  to {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+  }
+}
+
+.test-textarea {
+  width: 100%;
+  min-height: 30px;
+  padding: 12px 15px;
+  margin-top: 10px;
+  background-color: var(--soft-callout);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.test-textarea::placeholder {
+  color: var(--text-soft);
+  opacity: 0.6;
+}
+
+.test-textarea:focus {
+  outline: none;
+  border-color: var(--brand2);
+}
+
+.student-info {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.student-info input {
+  background-color: var(--code-bg);
+  color: var(--text-main);
+  border: 2px solid var(--tab-border);
+  padding: 8px 12px;
+  border-radius: 3px;
+  min-width: 250px;
+  font-size: 14px;
+}
+
+.required {
+  color: var(--brand3);
+  font-size: 16px;
+}
+
+.homework-actions {
+  display: flex;
+  gap: 15px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.homework-actions button {
+  font-size: 14px;
+  padding: 10px 20px;
+  flex: 1 1 calc(50% - 15px);
+  font-family: "Fira Sans", sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+#save-hw-btn {
+  flex-basis: 100%;
+  padding: 15px;
+  font-size: 16px;
+  background-color: var(--brand2);
+  color: #ffffff;
+  border-color: var(--brand1);
+}
+
+#save-hw-btn:hover {
+  background-color: var(--brand1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+#copy-hw-btn {
+  background-color: var(--panel-alt);
+}
+
+#copy-hw-btn:hover {
+  background-color: var(--hover-bg);
+}
+
+.reset-btn-hw {
+  background-color: transparent;
+  color: tomato;
+  border-color: tomato;
+}
+
+.reset-btn-hw:hover {
+  background-color: tomato;
+  color: #ffffff;
+}
+
+.error-highlight {
+  animation: shake 0.4s ease-in-out;
+}
+
+.error-highlight > p,
+.error-highlight > legend,
+.error-highlight.student-info label,
+.error-highlight .editor-title {
+  color: tomato !important;
+  transition: color 0.3s ease;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+#hw-error-msg {
+  color: tomato;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 15px;
+  display: none;
+}
+
+.code-wrapper + .test-textarea {
+  margin-top: 0;
+}
+
+input,
+.test-textarea {
+  font-family: "Fira Code", monospace;
+  font-size: 15px;
+}
+
+/* Фікс для системного фону при автозаповненні */
+#student-name:-webkit-autofill,
+#student-name:-webkit-autofill:hover,
+#student-name:-webkit-autofill:focus,
+#student-name:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 50px var(--code-bg) inset !important;
+  -webkit-text-fill-color: var(--text-main) !important;
+  font-family: inherit !important;
+}
+
+/* Прибирає блимання при тапі на телефонах */
+.test-label,
+.test-radio,
+.checkbox {
+  -webkit-tap-highlight-color: transparent;
+}
+
+fieldset.test-question {
+  margin: 20px 0;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+fieldset.test-question:has(.custom-editor-wrapper) {
+  margin: 30px 0;
+}
+fieldset.test-question:last-of-type {
+  margin-bottom: 0;
+}
+fieldset.test-question legend {
+  font-weight: 600;
+  color: var(--title);
+  font-size: 16px;
+  line-height: 1.4;
+  margin-bottom: 15px;
+}
+fieldset.error-highlight.test-question {
+  border-color: var(--brand3);
+}
+fieldset.test-question .code-wrapper {
+  margin-top: 0;
+}
+fieldset.test-question .custom-editor-wrapper {
+  margin: 0;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🔢 18. НУМЕРАЦІЯ РЯДКІВ (HIGHLIGHT.JS) */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+code:has(.hljs-ln) {
+  padding: 15px 0 !important;
+}
+
+table.hljs-ln {
+  margin: 0 !important;
+  background-color: transparent !important;
+  width: 100% !important;
+  border-collapse: collapse;
+}
+
+table.hljs-ln tr:hover {
+  background-color: var(--soft-callout) !important;
+}
+
+.hljs-ln td {
+  border: none !important;
+  padding: 0;
+  hyphens: none !important;
+  -webkit-hyphens: none !important;
+  line-height: 1.5;
+}
+
+.hljs-ln td.hljs-ln-numbers {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  text-align: right;
+  color: var(--brand4);
+  border-right: 1px solid var(--brand4) !important;
+  padding-right: 12px !important;
+  padding-left: 10px !important;
+  vertical-align: top;
+  width: 45px !important;
+  min-width: 45px !important;
+  white-space: nowrap !important;
+}
+
+.hljs-ln td.hljs-ln-code {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  white-space: pre !important;
+}
+
+code.long-code .hljs-ln td.hljs-ln-code {
+  white-space: pre !important;
+  word-break: normal !important;
+  overflow-wrap: anywhere !important;
+  hyphens: none !important;
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 💐 19. АДАПТИВНІСТЬ */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+/* 🖥️ ВЕЛИКІ ЕКРАНИ (min-width) */
+
+@media (min-width: 1440px) {
+  main,
+  header {
+    max-width: 1100px;
+  }
+}
+@media (min-width: 1920px) {
+  main,
+  header {
+    max-width: 1300px;
+  }
+}
+@media (min-width: 2560px) {
+  main,
+  header {
+    max-width: 1500px;
+  }
+}
+
+/* Зум картинок працює тільки на великих екранах */
+@media (min-width: 650px) {
+  img.zoomable {
+    cursor: zoom-in;
+  }
+  img.zoomable:hover {
+    border-color: var(--accent-pop);
+    transform: scale(1.02);
+  }
+  img.zoomable.expanded {
+    cursor: zoom-out;
+    width: 100%;
+    max-height: none;
+    height: auto;
+    transform: none;
+  }
+}
+
+/* 📱 ПЛАНШЕТИ ТА СМАРТФОНИ (max-width) */
+
+/* 📱 680px: Вкладки (Таби) */
+@media (max-width: 680px) {
+  .tab-btn {
+    flex: 1 1 calc(50% - 15px);
+  } /* Вкладки у 2 колонки */
+}
+
+/* 📱 649px: Основна адаптація контенту під смартфони */
+@media (max-width: 649px) {
+  body {
+    font-size: 16px;
+  }
+  main,
+  header {
+    width: 93%;
+  }
+  header {
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+  }
+  .accordion__content {
+    padding: 0 22px;
+  }
+  img {
+    max-width: 100%;
+    max-height: none;
+    height: auto;
+  }
+  code {
+    padding: 10px;
+  }
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
+}
+
+/* 📱 600px */
+@media (max-width: 600px) {
+  .download-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .download-button {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+}
+
+/* 📱 449px: Маленькі смартфони  */
+@media (max-width: 449px) {
+  :root {
+    --title-shadow: 2px 2px 0 var(--brand4);
+    --accordion-drop-shadow: 2px 2px 0 var(--brand4);
+  }
+  body {
+    font-size: 15px;
+  }
+  main,
+  header {
+    width: 94%;
+  }
+  h1,
+  body.dyslexia-mode h1 {
+    letter-spacing: 2px !important;
+  }
+  p,
+  li,
+  .objective {
+    text-align: left;
+  }
+  .objective {
+    line-height: 1.5;
+  }
+  .soft-callout {
+    padding: 15px;
+  }
+  .accordion__item {
+    margin-bottom: 12px;
+  }
+  td code {
+    font-size: 13px;
+  }
+  .title-container {
+    gap: 15px;
+  }
+  .homework-actions button {
+    flex: 1 1 100%;
+  }
+}
+
+/* 📱 370px: Дуже вузькі екрани */
+@media (max-width: 370px) {
+  .tab-btn {
+    flex: 1 1 100%;
+  } /* Вкладки в 1 колонку */
+}
+
+/* 📱 768px: Приховуємо кнопку зуму відео, бо воно і так на 100% ширини */
+@media (max-width: 768px) {
+  .video-zoom-btn {
+    display: none !important;
+  }
+
+  .video-wrapper.zoomable {
+    margin-bottom: 20px;
+  }
+}
+
+/* 🛑 ДОСТУПНІСТЬ (Accessibility) */
+
+/* Вимкнення анімацій для чутливих користувачів */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🛑 20. МОДАЛЬНІ ВІКНА (DIALOG) */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.custom-dialog {
+  margin: auto;
+  padding: 30px 25px;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  background-color: var(--panel);
+  color: var(--text-main);
+  max-width: 400px;
+  box-shadow: 0 10px 30px var(--shadow-accent);
+  text-align: center;
+  outline: none;
+}
+
+/* Затемнення фону */
+.custom-dialog::backdrop {
+  background: radial-gradient(
+    circle,
+    rgba(20, 33, 41, 0.4) 0%,
+    rgba(13, 21, 26, 0.85) 100%
+  );
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.custom-dialog h3 {
+  color: tomato;
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.custom-dialog p {
+  margin: 15px 0 25px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.dialog-actions button {
+  flex: 1;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#dialog-cancel-btn {
+  background-color: var(--panel-alt);
+}
+
+#dialog-cancel-btn:hover {
+  background-color: var(--hover-bg);
+}
+
+#dialog-confirm-btn {
+  background-color: transparent;
+  color: tomato;
+  border-color: tomato;
+}
+
+#dialog-confirm-btn:hover {
+  background-color: tomato;
+  color: #ffffff;
+}
+
+/* Анімація появи */
+.custom-dialog[open] {
+  animation: dialogFadeIn 0.3s ease normal;
+}
+
+@keyframes dialogFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

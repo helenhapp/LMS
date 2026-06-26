@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Навчальні матеріали" />
+
+    <link rel="icon" type="image/svg+xml" href="./media/icons/space.svg" />
+
+    <!-- Назва на вкладці -->
+    <title>Lesson 2</title>
+
+    <!-- Скрипт перемикання теми -->
+    <script>
+      const savedTheme = localStorage.getItem("lms_theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+
+      const hljsThemeLink =
+        savedTheme === "dark"
+          ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+          : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css";
+
+      document.head.insertAdjacentHTML(
+        "beforeend",
+        `<link id="hljs-theme" rel="stylesheet" href="${hljsThemeLink}" />`,
+      );
+    </script>
+
+    <!-- Підключення шрифтів (Google Fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Tektur:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Підсвітка коду (Highlight.js) -->
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"
+    ></script>
+
+    <!-- CodeMirror -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css"
+    />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"
+    ></script>
+
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/xml/xml.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css"
+    />
+
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"
+    ></script>
+
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"
+    ></script>
+
+    <!-- Власні стилі та скрипти -->
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./main.js" defer></script>
+  </head>
+
+  <body>
+    <!-- "Завіса", яка плавно зникає при завантаженні сторінки -->
+    <div class="transition-curtain"></div>
+
+    <div id="nav-container">
+      <nav class="top-bar">
+        <div class="logo-container">
+          <img
+            src="./media/icons/space.svg"
+            alt="Space Logo"
+            width="62"
+            height="62"
+            class="site-logo"
+          />
+        </div>
+        <div class="top-bar__controls">
+          <label class="toggle-switch" aria-label="Перемикач теми">
+            <input type="checkbox" id="theme-checkbox" />
+            <span class="slider">
+              <span class="icon sun"
+                ><img src="./media/icons/stars.svg"
+              /></span>
+              <span class="icon moon"
+                ><img src="./media/icons/moon.svg"
+              /></span>
+            </span>
+          </label>
+
+          <button
+            id="dyslexia-mode-btn"
+            class="wide-toggle"
+            title="Шрифт для дислектиків"
+          >
+            <img src="./media/icons/alphabet.svg" />
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Хедер з назвою теми та посиланнями -->
+    <header>
+      <div class="title-container">
+        <a href="#" class="nav-arrow prev-arrow" title="Попередній урок"
+          ><img src="./media/icons/double-alt-arrow-left.svg"
+        /></a>
+
+        <h1 id="lesson-title">Python: 02</h1>
+
+        <a href="#" class="nav-arrow next-arrow" title="Наступний урок"
+          ><img src="./media/icons/double-alt-arrow-right.svg"
+        /></a>
+      </div>
+
+      <p class="topic">import turtle</p>
+
+      <!-- Короткий опис -->
+      <section class="objective">
+        <ul>
+          <li>Lorem ipsum dolor sit amet.</li>
+          <li>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis,
+            quasi!
+          </li>
+          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
+        </ul>
+      </section>
+
+      <hr />
+    </header>
+
+    <!-- Основний контент -->
+    <main>
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-target="part-1">Підтема 1</button>
+        <button class="tab-btn" data-target="part-2">Підтема 2</button>
+        <button class="tab-btn" data-target="part-3">Домашні завдання</button>
+      </div>
+
+      <!-- 🧩 ЧАСТИНА 1 -->
+
+      <section id="part-1" class="accordion tab-content active show">
+        <!-- 📚 Теорія 1 -->
+        <details class="accordion__item" name="section1">
+          <summary class="accordion__header">
+            <h2>
+              <img src="./media/icons/read.svg" class="star" />
+              <span>Назва підтеми 1</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3 id="p1-why">Чому ми це вчимо?</h3>
+            <p>Тут пояснення і приклади де конкретно це використовується.</p>
+
+            <hr />
+
+            <h3 id="p1-materials">Матеріали до теми</h3>
+
+            <div class="download-buttons">
+              <a
+                href="./media/files/lesson-01.zip"
+                download
+                class="download-button"
+              >
+                <span class="download-arrow"
+                  ><img src="./media/icons/creativity.svg"
+                /></span>
+                <span class="file-name">lesson-01.zip</span>
+              </a>
+            </div>
+
+            <hr />
+
+            <h3 id="p2-video">Приклад відео</h3>
+
+            <div class="video-wrapper zoomable">
+              <video controls>
+                <source src="./media/video/test-video.mp4" type="video/mp4" />
+                Ваший браузер не підтримує відео.
+              </video>
+            </div>
+
+            <hr />
+
+            <!-- 2 -->
+            <h3 id="p1-html">Приклад коду</h3>
+            <p>
+              Тут <span class="accent">пояснення</span> матеріалу.
+              <span class="accent">Так</span> виглядають
+              <span class="accent">акценти</span>.
+            </p>
+
+            <pre><code class="language-python nocopy" >from turtle import *
+forward(100)
+print("Hello, World!")</code></pre>
+
+            <img src="" alt="результат коду з прикладу вище" />
+
+            <p class="soft-callout">
+              👾 <strong>Важливо</strong>: Так можна наголосити на важливій
+              інформації.
+            </p>
+            <p class="soft-callout">
+              👾 <i>Примітка</i>: Так можна написати додаткову інформацію.
+            </p>
+
+            <hr />
+
+            <h3 id="p1-tables">Приклад таблиць</h3>
+
+            <div class="tablecontainer">
+              <table>
+                <tr>
+                  <th>Назва шрифту</th>
+                  <th>Результат</th>
+                </tr>
+                <tr>
+                  <td>Comic Sans MS</td>
+                  <td>
+                    <span style="font-family: Comic Sans MS"
+                      >Lorem, ipsum.</span
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>Courier New</td>
+                  <td>
+                    <span style="font-family: Courier New">Lorem, ipsum.</span>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <hr />
+
+            <h3 id="p1-test">Тести</h3>
+
+            <div class="soft-callout">
+              <h4>Перевір свої знання</h4>
+              <p>1. Яким буде резутьтат цього коду?</p>
+              <pre><code class="language-python">print("Привіт");</code></pre>
+              <details class="answer">
+                <summary>Відповідь</summary>
+                <p class="accent">Виведеться слово "Привіт" в консолі.</p>
+              </details>
+            </div>
+          </div>
+        </details>
+
+        <!-- 📝 Завдання 1 -->
+        <details class="accordion__item" name="section1">
+          <summary class="accordion__header">
+            <h2>
+              <img src="./media/icons/online-class.svg" class="star" />
+              <span>Завдання 1</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <h3>Завдання</h3>
+
+            <details class="task" name="task1" open>
+              <summary><h4>Завдання 1.1</h4></summary>
+
+              <div>
+                <ol>
+                  <li>...</li>
+                </ol>
+              </div>
+            </details>
+
+            <hr />
+
+            <h3>Очікуваний результат:</h3>
+
+            <img
+              class="zoomable"
+              src=""
+              alt="скріншот з результатами виконаних завдань"
+            />
+          </div>
+        </details>
+      </section>
+
+      <!-- 🧩 ЧАСТИНА 2 -->
+
+      <section id="part-2" class="accordion tab-content">
+        <!-- 📚 Теорія 2 -->
+        <details class="accordion__item" name="section2">
+          <summary class="accordion__header">
+            <h2>
+              <img src="./media/icons/read.svg" class="star" />
+              <span>Назва підтеми 2</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <!-- 1 -->
+            <h3 id="p2-why">Чому ми це вчимо?</h3>
+            <p>Тут пояснення і приклади де конкретно це використовується.</p>
+
+            <hr />
+
+            <!-- 2 -->
+            <h3 id="p2-html">Приклад коду</h3>
+            <p>
+              Тут <span class="accent">пояснення</span> матеріалу.
+              <span class="accent">Так</span> виглядають
+              <span class="accent">акценти</span>.
+            </p>
+
+            <pre><code class="language-python nocopy" >from turtle import *
+forward(100)
+print("Hello, World!")</code></pre>
+
+            <img src="" alt="результат коду з прикладу вище" />
+
+            <hr />
+
+            <hr />
+
+            <h3 id="p2-test">Тести</h3>
+
+            <div class="soft-callout">
+              <h4>Перевір свої знання</h4>
+              <p>1. Яким буде резутьтат цього коду?</p>
+              <pre><code class="language-python">print("Привіт");</code></pre>
+              <details class="answer">
+                <summary>Відповідь</summary>
+                <p class="accent">Виведеться слово "Привіт" в консолі.</p>
+              </details>
+            </div>
+          </div>
+        </details>
+
+        <!-- 📝 Завдання 2 -->
+        <details class="accordion__item" name="section2">
+          <summary class="accordion__header">
+            <h2>
+              <img src="./media/icons/online-class.svg" class="star" />Завдання
+              2
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <h3>Завдання</h3>
+
+            <details class="task" name="task2" open>
+              <summary><h4>Завдання 2.1</h4></summary>
+
+              <div>
+                <ol>
+                  <li>...</li>
+                </ol>
+              </div>
+            </details>
+
+            <hr />
+
+            <h3>Очікуваний результат:</h3>
+
+            <img
+              class="zoomable"
+              src=""
+              alt="скріншот з результатами виконаних завдань"
+            />
+          </div>
+        </details>
+      </section>
+
+      <!-- 🧩 ЧАСТИНА 3 -->
+
+      <section id="part-3" class="accordion tab-content">
+        <!-- ДЗ -->
+        <details class="accordion__item" name="section4">
+          <summary class="accordion__header">
+            <h2>
+              <img src="./media/icons/score.svg" class="star" />
+              <span>Повторення</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <div class="tablecontainer">
+              <table>
+                <tr>
+                  <th>Поняття</th>
+                  <th>Означення</th>
+                  <th>Приклад коду</th>
+                </tr>
+
+                <tr>
+                  <td>Lorem, ipsum.</td>
+                  <td>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Nihil, reprehenderit.
+                  </td>
+                  <td>
+                    <pre><code class="language-python nocopy">print("hello")</code></pre>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <!-- практика -->
+        <details class="accordion__item" name="section4">
+          <summary class="accordion__header">
+            <h2>
+              <img src="./media/icons/math.svg" class="star" />
+              <span>Практика</span>
+            </h2>
+            <span class="acc-arrow">▶</span>
+          </summary>
+
+          <div class="accordion__content">
+            <form id="homework-form" novalidate>
+              <div class="student-info">
+                <label for="student-name"
+                  ><strong>Прізвище та ім'я:</strong></label
+                >
+                <input
+                  type="text"
+                  id="student-name"
+                  name="student_name"
+                  placeholder="Твоє прізвище та ім'я..."
+                  required
+                />
+              </div>
+
+              <fieldset class="test-question">
+                <legend>1. Яка команда запитує дані в користувача?</legend>
+                <label class="test-label">
+                  <input
+                    type="radio"
+                    class="test-radio"
+                    name="q1"
+                    value="print()"
+                  />
+                  print()
+                </label>
+                <label class="test-label">
+                  <input
+                    type="radio"
+                    class="test-radio"
+                    name="q1"
+                    value="int()"
+                  />
+                  int()
+                </label>
+                <label class="test-label">
+                  <input
+                    type="radio"
+                    class="test-radio"
+                    name="q1"
+                    value="input()"
+                  />
+                  input()
+                </label>
+              </fieldset>
+
+              <fieldset class="test-question">
+                <legend>
+                  2. Які з цих типів даних існують у Python? (Обери усі
+                  правильні)
+                </legend>
+                <label class="test-label">
+                  <input
+                    type="checkbox"
+                    class="test-checkbox"
+                    name="q2"
+                    value="int"
+                  />
+                  int
+                </label>
+                <label class="test-label">
+                  <input
+                    type="checkbox"
+                    class="test-checkbox"
+                    name="q2"
+                    value="text"
+                  />
+                  text
+                </label>
+                <label class="test-label">
+                  <input
+                    type="checkbox"
+                    class="test-checkbox"
+                    name="q2"
+                    value="float"
+                  />
+                  float
+                </label>
+              </fieldset>
+
+              <fieldset class="test-question">
+                <legend>3. Яким буде результат цього коду?</legend>
+                <pre><code class="language-python">print(f"2 + 2")</code></pre>
+                <textarea
+                  aria-label="Відповідь на питання 4"
+                  class="test-textarea"
+                  name="q4"
+                  placeholder="Напиши відповідь тут..."
+                ></textarea>
+              </fieldset>
+
+              <fieldset class="test-question">
+                <legend>
+                  4. Допиши програму, щоб вона запитувала також вік користувача,
+                  і виводила, скільки років йому буде наступного року:
+                </legend>
+
+                <div
+                  class="custom-editor-wrapper python-editor-wrapper"
+                  id="hw-python-editor"
+                >
+                  <div class="editor-header">
+                    <span class="editor-title">Python 3</span>
+                    <div class="editor-actions">
+                      <button
+                        type="button"
+                        class="reset-btn"
+                        title="Повернути початковий код"
+                      >
+                        🔄
+                      </button>
+                      <button
+                        type="button"
+                        class="run-btn"
+                        title="Запустити код"
+                      >
+                        ▶️
+                      </button>
+                    </div>
+                  </div>
+
+                  <textarea
+                    aria-label="Редактор Python коду"
+                    class="custom-editor-input"
+                    spellcheck="false"
+                    name="hw_python_code"
+                  >
+name = input("Як тебе звати? ")
+print("Привіт, " + name + "!")</textarea
+                  >
+
+                  <pre class="custom-editor-output" id="python-console-output">
+Очікування запуску...</pre
+                  >
+                </div>
+              </fieldset>
+
+              <div class="homework-actions">
+                <button type="button" id="save-hw-btn" class="submit-btn">
+                  Зберегти як .txt
+                </button>
+                <button type="button" id="copy-hw-btn" class="copy-btn">
+                  Скопіювати текст
+                </button>
+                <button
+                  type="button"
+                  id="clear-hw-btn"
+                  class="reset-btn-hw"
+                  title="Видалити всі відповіді"
+                >
+                  Очистити
+                </button>
+              </div>
+
+              <div id="hw-error-msg" class="error-text">
+                Будь ласка, заповни усі питання!
+              </div>
+            </form>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <p>Made by Olena Hapchyna</p>
+    </footer>
+
+    <!-- Кнопка для повернення на початок сторінки -->
+    <button
+      id="scrollToTopBtn"
+      class="scroll-to-top"
+      aria-label="Повернутися нагору"
+    >
+      <img src="./media/icons/ufo-alien.svg" />
+    </button>
+
+    <dialog id="clear-confirm-dialog" class="custom-dialog">
+      <div class="dialog-content">
+        <h3>⚠️ Увага!</h3>
+        <p>Ти справді хочеш видалити ВСІ свої відповіді і почати заново?</p>
+        <div class="dialog-actions">
+          <button type="button" id="dialog-cancel-btn">Скасувати</button>
+          <button type="button" id="dialog-confirm-btn">Так, видалити</button>
+        </div>
+      </div>
+    </dialog>
+  </body>
+</html>
