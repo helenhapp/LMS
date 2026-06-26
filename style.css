@@ -143,7 +143,6 @@ body.dyslexia-mode .objective {
   --title-shadow: 2px 2px 0 var(--brand4);
   --btn-shadow: 2px 2px 0 var(--brand3);
   --code-shadow: 0 4px 12px var(--shadow-accent);
-  --accordion-drop-shadow: 2px 2px 0 var(--brand3);
 
   /* Скролбари */
   --scrollbar-track: var(--bg1);
@@ -193,7 +192,6 @@ body.dyslexia-mode .objective {
   --title-shadow: 2px 2px 0 var(--brand2);
   --btn-shadow: 0 0 4px var(--accent);
   --code-shadow: 0 6px 15px var(--shadow-accent);
-  --accordion-drop-shadow: 2px 2px 0 var(--brand2);
 
   /* Скролбари */
   --scrollbar-track: var(--bg1);
@@ -2005,8 +2003,10 @@ code.long-code .hljs-ln td.hljs-ln-code {
 /* 📱 449px: Маленькі смартфони  */
 @media (max-width: 449px) {
   :root {
-    --title-shadow: 2px 2px 0 var(--brand4);
-    --accordion-drop-shadow: 2px 2px 0 var(--brand4);
+    --title-shadow: 1px 1px 0 var(--brand4);
+  }
+  [data-theme="dark"] {
+    --title-shadow: 1px 1px 0 var(--brand2); 
   }
   body {
     font-size: 15px;
