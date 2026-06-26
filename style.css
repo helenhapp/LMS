@@ -1354,7 +1354,7 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 footer p {
@@ -1713,7 +1713,7 @@ pre::-webkit-scrollbar-thumb,
 .homework-actions {
   display: flex;
   gap: 15px;
-  margin: 30px 0;
+  margin: 30px 0 10px 0;
   flex-wrap: wrap;
 }
 
