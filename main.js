@@ -650,7 +650,11 @@
         this.clearBtn.addEventListener("click", () => {
           activeFormToClear = this; // Запам'ятовуємо, яку форму очищати
           const clearDialog = document.getElementById("clear-confirm-dialog");
-          if (clearDialog) clearDialog.showModal();
+          if (clearDialog) {
+            clearDialog.querySelector("p").textContent =
+              "Ти справді хочеш видалити ВСІ свої відповіді і почати заново?";
+            clearDialog.showModal();
+          }
         });
       }
     }
@@ -961,7 +965,268 @@
   }
 
   // -----------------------------------------
-  // 🏁 6. INITIALIZATION (The Engine)
+  // 6. FLASHCARD MANAGER
+  // -----------------------------------------
+  class FlashcardManager {
+    constructor(moduleElement) {
+      this.module = moduleElement;
+
+      // 1. Читаємо JSON
+      const dataScript = this.module.querySelector(".fc-data");
+      if (!dataScript) return;
+
+      try {
+        this.deck = JSON.parse(dataScript.textContent);
+      } catch (error) {
+        console.error("Помилка читання словника:", error);
+        return;
+      }
+
+      // 2. DOM Елементи
+      this.scene = this.module.querySelector(".flashcard-scene");
+      this.cardElement = this.module.querySelector(".flashcard");
+      this.frontText = this.module.querySelector(".fc-front");
+      this.backText = this.module.querySelector(".fc-back");
+
+      this.controlsBlock = this.module.querySelector(".flashcard-controls");
+      this.btnKnow = this.module.querySelector(".fc-know-btn");
+      this.btnDontKnow = this.module.querySelector(".fc-dont-know-btn");
+
+      this.menuBlock = this.module.querySelector(".flashcard-menu");
+      this.btnAction = this.module.querySelector(".fc-action-btn");
+      this.btnClear = this.module.querySelector(".fc-clear-btn");
+
+      this.statRemaining = this.module.querySelector(".fc-remaining");
+      this.statLearned = this.module.querySelector(".fc-learned");
+
+      // 3. Налаштування LocalStorage
+      this.pageId = window.location.pathname.replace(/[^a-zA-Z0-9]/g, "_");
+      this.fcId = this.module.getAttribute("data-fc-id") || "default";
+      this.storageKey = `lms_fc_${this.pageId}_${this.fcId}`;
+
+      this.isAnimating = false;
+
+      this.init();
+    }
+
+    init() {
+      this.loadState();
+
+      // Слухачі подій
+      this.cardElement.addEventListener("click", () => {
+        if (!this.isAnimating && this.controlsBlock.style.display !== "none") {
+          this.cardElement.classList.toggle("is-flipped");
+        }
+      });
+
+      if (this.btnKnow)
+        this.btnKnow.addEventListener("click", () => this.handleAnswer(true));
+      if (this.btnDontKnow)
+        this.btnDontKnow.addEventListener("click", () =>
+          this.handleAnswer(false),
+        );
+
+      if (this.btnAction)
+        this.btnAction.addEventListener("click", () => this.startPlaying());
+      if (this.btnClear) {
+        this.btnClear.addEventListener("click", () => {
+          activeFormToClear = this;
+          const clearDialog = document.getElementById("clear-confirm-dialog");
+          if (clearDialog) {
+            clearDialog.querySelector("p").textContent =
+              "Точно видалити прогрес вивчення цих слів і почати з нуля?";
+            clearDialog.showModal();
+          }
+        });
+      }
+
+      // Керування з клавіатури
+      document.addEventListener("keydown", (e) => {
+        if (this.isAnimating || this.controlsBlock.style.display === "none")
+          return;
+        if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")
+          return;
+
+        const rect = this.module.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+
+        if (isVisible) {
+          if (e.key === " ") {
+            e.preventDefault();
+            this.cardElement.classList.toggle("is-flipped");
+          }
+          if (e.key === "ArrowLeft") this.handleAnswer(true);
+          if (e.key === "ArrowRight") this.handleAnswer(false);
+        }
+      });
+
+      // Запуск екрану меню
+      this.updateUI();
+    }
+
+    loadState() {
+      const saved = JSON.parse(localStorage.getItem(this.storageKey));
+      if (saved && saved.currentQueue) {
+        this.currentQueue = saved.currentQueue;
+        this.nextQueue = saved.nextQueue || [];
+        this.learnedCount = saved.learnedCount || 0;
+      } else {
+        this.resetData();
+      }
+    }
+
+    saveState() {
+      localStorage.setItem(
+        this.storageKey,
+        JSON.stringify({
+          currentQueue: this.currentQueue,
+          nextQueue: this.nextQueue,
+          learnedCount: this.learnedCount,
+        }),
+      );
+    }
+
+    resetData() {
+      this.currentQueue = [...this.deck];
+      this.nextQueue = [];
+      this.learnedCount = 0;
+    }
+
+    executeClear() {
+      // Цей метод автоматично викличеться кнопкою "Так, видалити" з модального вікна
+      this.resetData();
+      this.saveState();
+      this.updateUI();
+    }
+
+    startPlaying() {
+      this.menuBlock.style.display = "none";
+      this.controlsBlock.style.display = "flex";
+      this.showCurrentCard();
+    }
+
+    updateUI() {
+      this.updateStats();
+
+      // 1. Повна перемога (Всі слова вивчені)
+      if (this.currentQueue.length === 0 && this.nextQueue.length === 0) {
+        this.showMenu(
+          "🎉 Всі слова вивчено!",
+          "Чудова робота!",
+          "Почати з нуля",
+        );
+        return;
+      }
+
+      // 2. Раунд завершено (Є слова для наступного раунду)
+      if (this.currentQueue.length === 0 && this.nextQueue.length > 0) {
+        this.currentQueue = [...this.nextQueue];
+        this.nextQueue = [];
+        this.saveState();
+        this.updateStats();
+        this.showMenu(
+          "🔄 Раунд завершено",
+          `Слів на повторення: ${this.currentQueue.length}`,
+          "Почати наступний раунд",
+        );
+        return;
+      }
+
+      // 3. Звичайний старт / Продовження після паузи
+      const totalLeft = this.currentQueue.length + this.nextQueue.length;
+      if (this.learnedCount > 0 || this.nextQueue.length > 0) {
+        this.showMenu(
+          "⏸️ Прогрес збережено",
+          `Залишилось вивчити: ${totalLeft}`,
+          "Продовжити навчання",
+        );
+      } else {
+        this.showMenu(
+          "👋 Готові?",
+          `Слів у наборі: ${this.deck.length}`,
+          "Почати вивчення",
+        );
+      }
+    }
+
+    showMenu(title, subtitle, btnText) {
+      this.controlsBlock.style.display = "none";
+      this.menuBlock.style.display = "block";
+      this.cardElement.classList.remove("is-flipped");
+
+      // Якщо перемога - кнопка "Почати з нуля" скидає прогрес
+      if (title === "🎉 Всі слова вивчено!") {
+        this.btnAction.onclick = () => {
+          this.resetData();
+          this.saveState();
+          this.updateStats();
+          this.startPlaying();
+        };
+      } else {
+        this.btnAction.onclick = () => this.startPlaying();
+      }
+
+      this.btnAction.textContent = btnText;
+      // Використовуємо обличчя картки як дошку для меню
+      this.frontText.innerHTML = `<div style="line-height: 1.4;"><div style="font-size: 24px; margin-bottom: 10px; color: var(--title);">${title}</div><div style="font-size: 16px; font-weight: normal; color: var(--text-soft);">${subtitle}</div></div>`;
+      this.backText.innerHTML = "";
+    }
+
+    showCurrentCard() {
+      this.cardElement.classList.remove("is-flipped");
+      // Чекаємо, поки картка "перегорнеться" назад, щоб не було видно зміну тексту
+      setTimeout(() => {
+        const currentWord = this.currentQueue[0];
+        this.frontText.textContent = currentWord.en;
+        this.backText.textContent = currentWord.uk;
+        this.updateStats();
+      }, 150);
+    }
+
+    handleAnswer(knowIt) {
+      // Блокуємо спам кнопками під час анімації
+      if (this.isAnimating || this.currentQueue.length === 0) return;
+      this.isAnimating = true;
+
+      // 1. Додаємо клас анімації змахування
+      const swipeClass = knowIt ? "swipe-left" : "swipe-right";
+      this.scene.classList.add(swipeClass);
+
+      // 2. Чекаємо завершення анімації (500мс)
+      setTimeout(() => {
+        const word = this.currentQueue.shift();
+
+        if (knowIt) {
+          this.learnedCount++;
+        } else {
+          this.nextQueue.push(word); // Відправляємо у наступний раунд
+        }
+
+        this.saveState();
+        this.scene.classList.remove(swipeClass); // Повертаємо сцену на місце
+
+        // 3. Вирішуємо, що робити далі
+        if (this.currentQueue.length > 0) {
+          this.showCurrentCard();
+          this.isAnimating = false;
+        } else {
+          this.updateUI(); // Викликаємо екран меню (Раунд завершено / Перемога)
+          this.isAnimating = false;
+        }
+      }, 500);
+    }
+
+    updateStats() {
+      const totalRemaining = this.currentQueue.length + this.nextQueue.length;
+      if (this.statRemaining)
+        this.statRemaining.textContent = `Залишилось: ${totalRemaining}`;
+      if (this.statLearned)
+        this.statLearned.textContent = `Вивчено: ${this.learnedCount} / ${this.deck.length}`;
+    }
+  }
+
+  // -----------------------------------------
+  // 🏁 7. INITIALIZATION (The Engine)
   // -----------------------------------------
   document.addEventListener("DOMContentLoaded", () => {
     const themeManager = new ThemeManager();
@@ -972,6 +1237,11 @@
     // Iніціалізуємо КОЖНУ форму на сторінці окремо
     document.querySelectorAll(".homework-form").forEach((form) => {
       new HomeworkManager(form);
+    });
+
+    // Ініціалізуємо всі модулі карток на сторінці
+    document.querySelectorAll(".flashcard-module").forEach((module) => {
+      new FlashcardManager(module);
     });
 
     // Глобальні обробники для модального вікна очищення

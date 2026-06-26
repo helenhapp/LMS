@@ -1740,9 +1740,7 @@ pre::-webkit-scrollbar-thumb,
 }
 
 .save-hw-btn:hover {
-  background-color: var(--brand1);
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .copy-hw-btn {
@@ -2169,4 +2167,137 @@ code.long-code .hljs-ln td.hljs-ln-code {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
+}
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🃏 FLASHCARDS */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.flashcard-module {
+  max-width: 500px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+.flashcard-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-family: "Tektur", sans-serif;
+  color: var(--text-soft);
+}
+
+/* 1. The Scene creates 3D space */
+.flashcard-scene {
+  width: 100%;
+  height: 250px;
+  perspective: 1000px; /* Gives the 3D depth */
+  margin-bottom: 25px;
+}
+
+/* 2. The Card is the wrapper that spins */
+.flashcard {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d; /* Allows children to live in 3D space */
+  cursor: pointer;
+}
+
+.flashcard.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* 3. The Faces (Front and Back) */
+.flashcard-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hides the back of the div when it rotates away */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 12px;
+  border: 2px solid var(--accent);
+  box-shadow: var(--code-shadow);
+  padding: 20px;
+}
+
+.flashcard-front {
+  background-color: var(--panel);
+  color: var(--text-main);
+}
+
+.flashcard-back {
+  background-color: var(--panel-alt);
+  color: var(--brand2);
+  transform: rotateY(180deg); /* This starts flipped backwards */
+}
+
+.flashcard-controls {
+  display: flex;
+  gap: 15px;
+}
+.flashcard-controls button {
+  flex: 1;
+  padding: 15px;
+  font-size: 16px;
+}
+
+/* Анімації змахування картки */
+.flashcard-scene.swipe-left {
+  animation: swipeLeftAnim 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.flashcard-scene.swipe-right {
+  animation: swipeRightAnim 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes swipeLeftAnim {
+  0% {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100px) rotate(-10deg);
+    opacity: 0;
+  }
+}
+@keyframes swipeRightAnim {
+  0% {
+    transform: translateX(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100px) rotate(10deg);
+    opacity: 0;
+  }
+}
+
+/* Стилі для меню */
+.flashcard-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.flashcard-menu .fc-action-btn {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+}
+
+.flashcard-menu .fc-action-btn:hover {
+  transform: translateY(-2px);
+}
+
+.flashcard-menu .fc-clear-btn {
+  font-size: 13px;
+  padding: 10px;
+  opacity: 0.8;
+  border-color: tomato;
+}
+.flashcard-menu .fc-clear-btn:hover {
+  opacity: 1;
 }
