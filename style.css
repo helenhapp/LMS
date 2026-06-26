@@ -1277,6 +1277,12 @@ code.long-code {
   align-items: center;
 }
 
+.editor-actions button img {
+  border: none;
+  margin: 0;
+  width: 30px;
+}
+
 .run-btn,
 .reset-btn {
   margin: 0;
@@ -1664,7 +1670,6 @@ pre::-webkit-scrollbar-thumb,
 
 .test-textarea {
   width: 100%;
-  min-height: 30px;
   padding: 12px 15px;
   margin-top: 10px;
   background-color: var(--soft-callout);
@@ -1674,8 +1679,11 @@ pre::-webkit-scrollbar-thumb,
   font-family: inherit;
   font-size: 15px;
   line-height: 1.5;
-  resize: vertical;
-  transition: all 0.3s ease;
+  resize: none;
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .test-textarea::placeholder {

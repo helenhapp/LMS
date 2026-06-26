@@ -639,7 +639,9 @@
     init() {
       this.hwForm.addEventListener("submit", (e) => e.preventDefault());
       this.loadSavedData();
+      this.initAutoResizeTextareas();
       this.hwForm.addEventListener("input", () => this.saveData());
+      this.hwForm.addEventListener("change", () => this.saveData());
 
       if (this.saveBtn)
         this.saveBtn.addEventListener("click", () => this.handleSave());
@@ -657,6 +659,27 @@
           }
         });
       }
+    }
+
+    initAutoResizeTextareas() {
+      const textareas = this.hwForm.querySelectorAll(".test-textarea");
+
+      textareas.forEach((textarea) => {
+        // Примусово робимо висоту в 1 рядок за замовчуванням
+        textarea.setAttribute("rows", "1");
+
+        // Функція для підлаштування висоти
+        const autoResize = () => {
+          textarea.style.height = "auto"; // Спочатку скидаємо висоту
+          textarea.style.height = textarea.scrollHeight + 2 + "px"; // +2px для рамки
+        };
+
+        // Викликаємо відразу (щоб поле розтягнулося, якщо в ньому ВЖЕ є збережений довгий текст)
+        setTimeout(autoResize, 0);
+
+        // Викликаємо при кожному вводі символу
+        textarea.addEventListener("input", autoResize);
+      });
     }
 
     loadSavedData() {
@@ -854,17 +877,46 @@
         });
 
       // 2. Clear inputs visually without reloading the page!
-      // (Reloading the page would wipe out unsaved progress on OTHER forms)
       this.hwForm.reset();
+
       this.hwForm
         .querySelectorAll("input[type='radio'], input[type='checkbox']")
         .forEach((el) => (el.checked = false));
+
+      // ЗМІНА 1: Виключаємо .custom-editor-input з масового очищення
       this.hwForm
-        .querySelectorAll("textarea, input[type='text']")
-        .forEach((el) => (el.value = ""));
-      this.hwForm.querySelectorAll(".CodeMirror").forEach((cmWrapper) => {
-        if (cmWrapper.CodeMirror) cmWrapper.CodeMirror.setValue("");
-      });
+        .querySelectorAll(
+          "textarea:not(.custom-editor-input), input[type='text']",
+        )
+        .forEach((el) => {
+          el.value = "";
+          // Якщо це авторозширюване поле, повертаємо його до розміру 1 рядка
+          if (el.classList.contains("test-textarea")) {
+            el.style.height = "auto";
+          }
+        });
+
+      // ЗМІНА 2: Скидаємо CodeMirror до початкового коду (defaultValue)
+      this.hwForm
+        .querySelectorAll(".custom-editor-wrapper")
+        .forEach((wrapper) => {
+          const codeInput = wrapper.querySelector(".custom-editor-input");
+          const cmWrapper = wrapper.querySelector(".CodeMirror");
+          const outputDisplay = wrapper.querySelector(".custom-editor-output");
+          const iframeOutput = wrapper.querySelector(".html-editor-output");
+
+          if (codeInput && cmWrapper && cmWrapper.CodeMirror) {
+            const initialValue = codeInput.defaultValue;
+
+            // Повертаємо стартовий код
+            cmWrapper.CodeMirror.setValue(initialValue);
+
+            // Скидаємо iframe для HTML або консоль для Python/JS
+            if (iframeOutput) iframeOutput.srcdoc = initialValue;
+            if (outputDisplay)
+              outputDisplay.textContent = "Очікування запуску...";
+          }
+        });
 
       // 3. Save the new empty state
       this.saveData();
