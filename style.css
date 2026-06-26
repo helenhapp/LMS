@@ -2301,3 +2301,20 @@ code.long-code .hljs-ln td.hljs-ln-code {
 .flashcard-menu .fc-clear-btn:hover {
   opacity: 1;
 }
+
+/* Модифікатор для карток з довгим текстом (означення, концепції) */
+.flashcard-module.fc-long-text .flashcard-face {
+  font-size: 20px; /* Зменшений шрифт (стандартний 28px) */
+  font-weight: 500; /* Прибираємо агресивний bold */
+  line-height: 1.4;
+  padding: 25px;
+  text-align: center;
+}
+
+/* Додатково зменшуємо шрифт для мобільних телефонів у цьому режимі */
+@media (max-width: 449px) {
+  .flashcard-module.fc-long-text .flashcard-face {
+    font-size: 18px;
+    padding: 15px;
+  }
+}

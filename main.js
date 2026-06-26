@@ -1174,12 +1174,19 @@
 
     showCurrentCard() {
       this.cardElement.classList.remove("is-flipped");
+
       // Чекаємо, поки картка "перегорнеться" назад, щоб не було видно зміну тексту
       setTimeout(() => {
-        const currentWord = this.currentQueue[0];
-        this.frontText.textContent = currentWord.en;
-        this.backText.textContent = currentWord.uk;
-        this.updateStats();
+        if (this.currentQueue.length > 0) {
+          const currentWord = this.currentQueue[0];
+
+          // Універсальні ключі (з підтримкою старих 'en'/'uk' для зворотної сумісності)
+          this.frontText.textContent =
+            currentWord.front || currentWord.en || "";
+          this.backText.textContent = currentWord.back || currentWord.uk || "";
+
+          this.updateStats();
+        }
       }, 150);
     }
 
