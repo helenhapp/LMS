@@ -903,13 +903,19 @@ header a.nav-arrow:hover {
 
 /* Випадаючі списки */
 .accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   margin: 30px auto;
+}
+main > .accordion:first-child {
+  margin-top: 0;
 }
 .accordion p {
   margin: 15px 0;
 }
 .accordion__item {
-  margin-bottom: 15px;
+  margin: 0;
   background: var(--panel);
   transition: all 0.4s ease;
   position: relative;
@@ -2006,7 +2012,7 @@ code.long-code .hljs-ln td.hljs-ln-code {
     --title-shadow: 1px 1px 0 var(--brand4);
   }
   [data-theme="dark"] {
-    --title-shadow: 1px 1px 0 var(--brand2); 
+    --title-shadow: 1px 1px 0 var(--brand2);
   }
   body {
     font-size: 15px;
@@ -2030,9 +2036,9 @@ code.long-code .hljs-ln td.hljs-ln-code {
   .soft-callout {
     padding: 15px;
   }
-  .accordion__item {
-    margin-bottom: 12px;
-  }
+  /* .accordion {
+    gap: 12px;
+  } */
   td code {
     font-size: 13px;
   }
