@@ -611,24 +611,27 @@
   // -----------------------------------------
   // 📝 4. HOMEWORK MANAGER
   // -----------------------------------------
+  // Глобальна змінна для модального вікна (щоб знати, яку саме форму очищати)
+  let activeFormToClear = null;
+
   class HomeworkManager {
-    constructor() {
-      this.hwForm = document.getElementById("homework-form");
-      if (!this.hwForm) return;
+    constructor(formElement) {
+      this.hwForm = formElement;
 
-      this.studentNameInput = document.getElementById("student-name");
-      this.saveBtn = document.getElementById("save-hw-btn");
-      this.copyBtn = document.getElementById("copy-hw-btn");
-      this.clearBtn = document.getElementById("clear-hw-btn");
-      this.errorMsg = document.getElementById("hw-error-msg");
+      // Використовуємо data-form-id для розділення збережень у localStorage
+      this.formId =
+        this.hwForm.getAttribute("data-form-id") ||
+        Math.random().toString(36).substr(2, 9);
 
-      // Елементи модального вікна
-      this.clearDialog = document.getElementById("clear-confirm-dialog");
-      this.dialogCancelBtn = document.getElementById("dialog-cancel-btn");
-      this.dialogConfirmBtn = document.getElementById("dialog-confirm-btn");
+      // Шукаємо елементи ТІЛЬКИ всередині цієї конкретної форми (через класи, а не ID)
+      this.studentNameInput = this.hwForm.querySelector(".student-name");
+      this.saveBtn = this.hwForm.querySelector(".save-hw-btn");
+      this.copyBtn = this.hwForm.querySelector(".copy-hw-btn");
+      this.clearBtn = this.hwForm.querySelector(".clear-hw-btn");
+      this.errorMsg = this.hwForm.querySelector(".hw-error-msg");
 
       this.pageId = window.location.pathname.replace(/[^a-zA-Z0-9]/g, "_");
-      this.formStorageKey = "lms_hw_form_" + this.pageId;
+      this.formStorageKey = `lms_hw_form_${this.pageId}_${this.formId}`;
 
       this.init();
     }
@@ -643,19 +646,13 @@
       if (this.copyBtn)
         this.copyBtn.addEventListener("click", () => this.handleCopy());
 
-      // Відкриття модального вікна замість alert
-      if (this.clearBtn)
-        this.clearBtn.addEventListener("click", () => this.handleClearClick());
-
-      // Кнопки всередині модального вікна
-      if (this.dialogCancelBtn)
-        this.dialogCancelBtn.addEventListener("click", () =>
-          this.clearDialog.close(),
-        );
-      if (this.dialogConfirmBtn)
-        this.dialogConfirmBtn.addEventListener("click", () =>
-          this.executeClear(),
-        );
+      if (this.clearBtn) {
+        this.clearBtn.addEventListener("click", () => {
+          activeFormToClear = this; // Запам'ятовуємо, яку форму очищати
+          const clearDialog = document.getElementById("clear-confirm-dialog");
+          if (clearDialog) clearDialog.showModal();
+        });
+      }
     }
 
     loadSavedData() {
@@ -693,7 +690,7 @@
         });
 
       localStorage.setItem(this.formStorageKey, JSON.stringify(data));
-      this.errorMsg.style.display = "none";
+      if (this.errorMsg) this.errorMsg.style.display = "none";
       this.hwForm
         .querySelectorAll(".error-highlight")
         .forEach((el) => el.classList.remove("error-highlight"));
@@ -702,16 +699,20 @@
     collectAndValidate() {
       let isValid = true;
       let outputText = `ДОМАШНЄ ЗАВДАННЯ\n\n`;
+      let name = "";
 
-      const name = this.studentNameInput.value.trim();
-      if (!name) {
-        this.studentNameInput
-          .closest(".student-info")
-          .classList.add("error-highlight");
-        isValid = false;
+      // Перевіряємо, чи існує поле імені у цій формі
+      if (this.studentNameInput) {
+        name = this.studentNameInput.value.trim();
+        if (!name) {
+          this.studentNameInput
+            .closest(".student-info")
+            .classList.add("error-highlight");
+          isValid = false;
+        }
+        outputText += `Учень: ${name}\n`;
       }
 
-      outputText += `Учень: ${name || "[НЕ ВКАЗАНО]"}\n`;
       const date = new Date();
       outputText += `Час виконання: ${date.toLocaleDateString("uk-UA")} о ${date.toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" })}\n\n- - - - - - - - - - - - - - - - - - - -\n\n`;
 
@@ -791,10 +792,10 @@
       const { isValid, outputText, name } = this.collectAndValidate();
 
       if (!isValid) {
-        this.errorMsg.style.display = "block";
-        document
-          .querySelector(".error-highlight")
-          .scrollIntoView({ behavior: "smooth", block: "center" });
+        if (this.errorMsg) this.errorMsg.style.display = "block";
+        const errorEl = this.hwForm.querySelector(".error-highlight");
+        if (errorEl)
+          errorEl.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
 
@@ -807,10 +808,12 @@
       const safeTopic = pageTitle
         .replace(/\s+/g, "_")
         .replace(/[^a-zа-яіїєґ0-9_]/gi, "");
-      const safeName = name.replace(/[^a-zа-яіїєґ0-9]/gi, "_");
+      const safeName = name
+        ? "_" + name.replace(/[^a-zа-яіїєґ0-9]/gi, "_")
+        : "";
 
       a.href = url;
-      a.download = `ДЗ_${safeTopic}_${safeName}.txt`;
+      a.download = `ДЗ_${safeTopic}${safeName}.txt`;
       a.click();
       URL.revokeObjectURL(url);
 
@@ -825,10 +828,10 @@
       const { isValid, outputText } = this.collectAndValidate();
 
       if (!isValid) {
-        this.errorMsg.style.display = "block";
-        document
-          .querySelector(".error-highlight")
-          .scrollIntoView({ behavior: "smooth", block: "center" });
+        if (this.errorMsg) this.errorMsg.style.display = "block";
+        const errorEl = this.hwForm.querySelector(".error-highlight");
+        if (errorEl)
+          errorEl.scrollIntoView({ behavior: "smooth", block: "center" });
         return;
       }
 
@@ -837,20 +840,30 @@
       });
     }
 
-    handleClearClick() {
-      if (this.clearDialog) {
-        this.clearDialog.showModal();
-      }
-    }
-
     executeClear() {
+      // 1. Remove from local storage
       localStorage.removeItem(this.formStorageKey);
       this.hwForm
         .querySelectorAll(".custom-editor-wrapper")
         .forEach((wrapper) => {
           localStorage.removeItem("lms_code_" + this.pageId + "_" + wrapper.id);
         });
-      window.location.reload();
+
+      // 2. Clear inputs visually without reloading the page!
+      // (Reloading the page would wipe out unsaved progress on OTHER forms)
+      this.hwForm.reset();
+      this.hwForm
+        .querySelectorAll("input[type='radio'], input[type='checkbox']")
+        .forEach((el) => (el.checked = false));
+      this.hwForm
+        .querySelectorAll("textarea, input[type='text']")
+        .forEach((el) => (el.value = ""));
+      this.hwForm.querySelectorAll(".CodeMirror").forEach((cmWrapper) => {
+        if (cmWrapper.CodeMirror) cmWrapper.CodeMirror.setValue("");
+      });
+
+      // 3. Save the new empty state
+      this.saveData();
     }
 
     tempFeedback(btn, text, color) {
@@ -869,7 +882,6 @@
       }, 2500);
     }
   }
-
   // -----------------------------------------
   // 🌐 5. GLOBAL EVENT DELEGATOR (The Traffic Controller)
   // -----------------------------------------
@@ -955,7 +967,30 @@
     const themeManager = new ThemeManager();
     const uiManager = new UIManager();
     new CodeManager();
-    new HomeworkManager();
     new GlobalEvents(themeManager, uiManager);
+
+    // Iніціалізуємо КОЖНУ форму на сторінці окремо
+    document.querySelectorAll(".homework-form").forEach((form) => {
+      new HomeworkManager(form);
+    });
+
+    // Глобальні обробники для модального вікна очищення
+    const clearDialog = document.getElementById("clear-confirm-dialog");
+    const dialogCancelBtn = document.getElementById("dialog-cancel-btn");
+    const dialogConfirmBtn = document.getElementById("dialog-confirm-btn");
+
+    if (clearDialog && dialogCancelBtn) {
+      dialogCancelBtn.addEventListener("click", () => clearDialog.close());
+    }
+
+    if (clearDialog && dialogConfirmBtn) {
+      dialogConfirmBtn.addEventListener("click", () => {
+        if (activeFormToClear) {
+          activeFormToClear.executeClear(); // Очищає лише ту форму, на якій натиснули кнопку!
+          activeFormToClear = null;
+        }
+        clearDialog.close();
+      });
+    }
   });
 })(); // End of IIFE

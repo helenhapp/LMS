@@ -458,16 +458,14 @@ print("Hello, World!")</code></pre>
           </summary>
 
           <div class="accordion__content">
-            <form id="homework-form" novalidate>
+            <form class="homework-form" data-form-id="" novalidate>
               <div class="student-info">
-                <label for="student-name"
-                  ><strong>Прізвище та ім'я:</strong></label
-                >
+                <label><strong>Прізвище та ім'я:</strong></label>
                 <input
                   type="text"
-                  id="student-name"
+                  class="student-name"
                   name="student_name"
-                  placeholder="Твоє прізвище та ім'я..."
+                  placeholder="Ім'я..."
                   required
                 />
               </div>
@@ -595,23 +593,17 @@ print("Привіт, " + name + "!")</textarea
               </fieldset>
 
               <div class="homework-actions">
-                <button type="button" id="save-hw-btn" class="submit-btn">
+                <button type="button" class="submit-btn save-hw-btn">
                   Зберегти як .txt
                 </button>
-                <button type="button" id="copy-hw-btn" class="copy-btn">
+                <button type="button" class="copy-btn copy-hw-btn">
                   Скопіювати текст
                 </button>
-                <button
-                  type="button"
-                  id="clear-hw-btn"
-                  class="reset-btn-hw"
-                  title="Видалити всі відповіді"
-                >
+                <button type="button" class="reset-btn-hw clear-hw-btn">
                   Очистити
                 </button>
               </div>
-
-              <div id="hw-error-msg" class="error-text">
+              <div class="error-text hw-error-msg">
                 Будь ласка, заповни усі питання!
               </div>
             </form>

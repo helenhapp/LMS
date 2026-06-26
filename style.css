@@ -1729,7 +1729,7 @@ pre::-webkit-scrollbar-thumb,
   gap: 8px;
 }
 
-#save-hw-btn {
+.save-hw-btn {
   flex-basis: 100%;
   padding: 15px;
   font-size: 16px;
@@ -1738,17 +1738,17 @@ pre::-webkit-scrollbar-thumb,
   border-color: var(--brand1);
 }
 
-#save-hw-btn:hover {
+.save-hw-btn:hover {
   background-color: var(--brand1);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-#copy-hw-btn {
+.copy-hw-btn {
   background-color: var(--panel-alt);
 }
 
-#copy-hw-btn:hover {
+.copy-hw-btn:hover {
   background-color: var(--hover-bg);
 }
 
@@ -1788,7 +1788,7 @@ pre::-webkit-scrollbar-thumb,
   }
 }
 
-#hw-error-msg {
+.hw-error-msg {
   color: tomato;
   font-weight: bold;
   text-align: center;
@@ -1807,10 +1807,10 @@ input,
 }
 
 /* Фікс для системного фону при автозаповненні */
-#student-name:-webkit-autofill,
-#student-name:-webkit-autofill:hover,
-#student-name:-webkit-autofill:focus,
-#student-name:-webkit-autofill:active {
+.student-name:-webkit-autofill,
+.student-name:-webkit-autofill:hover,
+.student-name:-webkit-autofill:focus,
+.student-name:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 50px var(--code-bg) inset !important;
   -webkit-text-fill-color: var(--text-main) !important;
   font-family: inherit !important;
