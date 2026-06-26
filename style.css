@@ -569,8 +569,14 @@ button:active {
   color: var(--text-main);
   pointer-events: none;
 }
+
+/* 1. Жорстко ховаємо неактивні вкладки (щоб .accordion не міг їх розгорнути) */
+.tab-content:not(.active) {
+  display: none !important;
+}
+
+/* 2. Базові стилі для анімації (без конфліктних display) */
 .tab-content {
-  display: none;
   opacity: 0;
   transform: translateY(10px);
   transition:
@@ -578,12 +584,7 @@ button:active {
     transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Стан 1: Вкладка присутня в документі (але ще прозора) */
-.tab-content.active {
-  display: block;
-}
-
-/* Стан 2: Вкладка плавно стає видимою */
+/* 3. Анімація плавної появи */
 .tab-content.show {
   opacity: 1;
   transform: translateY(0);
@@ -2036,9 +2037,9 @@ code.long-code .hljs-ln td.hljs-ln-code {
   .soft-callout {
     padding: 15px;
   }
-  /* .accordion {
+  .accordion {
     gap: 12px;
-  } */
+  }
   td code {
     font-size: 13px;
   }
