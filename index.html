@@ -516,6 +516,92 @@ print("Hello, World!")</code></pre>
                 </button>
               </div>
             </div>
+
+            <hr />
+
+            <h3>Сортування</h3>
+
+            <div
+              class="sorting-game-module"
+              data-game-id="verbs-stative-dynamic"
+            >
+              <script type="application/json" class="sorting-data">
+                {
+                  "categories": [
+                    {
+                      "id": "dynamic",
+                      "title": "Dynamic (Action) Verbs",
+                      "hint": "Can be used in Continuous (-ing)"
+                    },
+                    {
+                      "id": "stative",
+                      "title": "Stative (State) Verbs",
+                      "hint": "Usually NOT used in Continuous"
+                    },
+                    {
+                      "id": "both",
+                      "title": "Both",
+                      "hint": "Meaning changes depending on context"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "id": "item1",
+                      "text": "Run",
+                      "correctCategory": "dynamic"
+                    },
+                    {
+                      "id": "item2",
+                      "text": "Know",
+                      "correctCategory": "stative"
+                    },
+                    {
+                      "id": "item3",
+                      "text": "Understand",
+                      "correctCategory": "stative"
+                    },
+                    {
+                      "id": "item4",
+                      "text": "Eat",
+                      "correctCategory": "dynamic"
+                    },
+                    {
+                      "id": "item5",
+                      "text": "Believe",
+                      "correctCategory": "stative"
+                    },
+                    {
+                      "id": "item6",
+                      "text": "Build",
+                      "correctCategory": "dynamic"
+                    },
+                    {
+                      "id": "item7",
+                      "text": "Have",
+                      "correctCategory": "both"
+                    },
+                    {
+                      "id": "item8",
+                      "text": "Think",
+                      "correctCategory": "both"
+                    }
+                  ]
+                }
+              </script>
+
+              <div class="sorting-header">
+                <h4>Sort the Items</h4>
+                <button type="button" class="reset-btn-hw sorting-reset-btn">
+                  Reset Game
+                </button>
+              </div>
+
+              <div class="sorting-bank" id="bank-verbs-stative-dynamic"></div>
+
+              <div class="sorting-zones-container"></div>
+
+              <div class="sorting-feedback"></div>
+            </div>
           </div>
         </details>
 
@@ -671,90 +757,6 @@ print("Привіт, " + name + "!")</textarea
                   >
                 </div>
               </fieldset>
-
-              <hr />
-
-              <div
-                class="sorting-game-module"
-                data-game-id="verbs-stative-dynamic"
-              >
-                <script type="application/json" class="sorting-data">
-                  {
-                    "categories": [
-                      {
-                        "id": "dynamic",
-                        "title": "Dynamic (Action) Verbs",
-                        "hint": "Can be used in Continuous (-ing)"
-                      },
-                      {
-                        "id": "stative",
-                        "title": "Stative (State) Verbs",
-                        "hint": "Usually NOT used in Continuous"
-                      },
-                      {
-                        "id": "both",
-                        "title": "Both",
-                        "hint": "Meaning changes depending on context"
-                      }
-                    ],
-                    "items": [
-                      {
-                        "id": "item1",
-                        "text": "Run",
-                        "correctCategory": "dynamic"
-                      },
-                      {
-                        "id": "item2",
-                        "text": "Know",
-                        "correctCategory": "stative"
-                      },
-                      {
-                        "id": "item3",
-                        "text": "Understand",
-                        "correctCategory": "stative"
-                      },
-                      {
-                        "id": "item4",
-                        "text": "Eat",
-                        "correctCategory": "dynamic"
-                      },
-                      {
-                        "id": "item5",
-                        "text": "Believe",
-                        "correctCategory": "stative"
-                      },
-                      {
-                        "id": "item6",
-                        "text": "Build",
-                        "correctCategory": "dynamic"
-                      },
-                      {
-                        "id": "item7",
-                        "text": "Have",
-                        "correctCategory": "both"
-                      },
-                      {
-                        "id": "item8",
-                        "text": "Think",
-                        "correctCategory": "both"
-                      }
-                    ]
-                  }
-                </script>
-
-                <div class="sorting-header">
-                  <h4>Sort the Items</h4>
-                  <button type="button" class="reset-btn-hw sorting-reset-btn">
-                    Reset Game
-                  </button>
-                </div>
-
-                <div class="sorting-bank" id="bank-verbs-stative-dynamic"></div>
-
-                <div class="sorting-zones-container"></div>
-
-                <div class="sorting-feedback"></div>
-              </div>
 
               <hr />
 

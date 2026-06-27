@@ -670,15 +670,31 @@
 
         // Функція для підлаштування висоти
         const autoResize = () => {
+          // ЗАХИСТ: Якщо поле приховане (наприклад, акордеон закритий),
+          // його offsetParent буде null. Ми скасовуємо зміну висоти, щоб не сплюснути його до 0.
+          if (textarea.offsetParent === null) return;
+
           textarea.style.height = "auto"; // Спочатку скидаємо висоту
           textarea.style.height = textarea.scrollHeight + 2 + "px"; // +2px для рамки
         };
 
-        // Викликаємо відразу (щоб поле розтягнулося, якщо в ньому ВЖЕ є збережений довгий текст)
+        // Викликаємо відразу (на випадок, якщо вкладка вже відкрита)
         setTimeout(autoResize, 0);
 
         // Викликаємо при кожному вводі символу
         textarea.addEventListener("input", autoResize);
+
+        // НОВЕ: Спостерігач, який чекає, поки поле стане видимим (коли ви відкриваєте вкладку)
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              autoResize(); // Перераховуємо висоту в момент появи на екрані
+            }
+          });
+        });
+
+        // Починаємо стежити за цим полем
+        observer.observe(textarea);
       });
     }
 

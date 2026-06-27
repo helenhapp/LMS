@@ -1672,6 +1672,7 @@ pre::-webkit-scrollbar-thumb,
   width: 100%;
   padding: 12px 15px;
   margin-top: 10px;
+  min-height: 48px;
   background-color: var(--soft-callout);
   border: 2px solid var(--accent);
   border-radius: 6px;
