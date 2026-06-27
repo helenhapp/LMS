@@ -2326,3 +2326,148 @@ code.long-code .hljs-ln td.hljs-ln-code {
     padding: 15px;
   }
 }
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🧩 INTERACTIVE SORTING GAME */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.sorting-game-module {
+  background-color: var(--soft-callout);
+  border: 1px solid var(--accordion-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.sorting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.sorting-header h4 {
+  margin: 0;
+  color: var(--title);
+}
+
+.sorting-reset-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* The Bank (Where items start) */
+.sorting-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 60px;
+  padding: 15px;
+  background-color: var(--code-bg);
+  border: 2px dashed var(--accent);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.sorting-bank.drag-over {
+  background-color: var(--hover-bg);
+}
+
+/* The Draggable Items */
+.sorting-item {
+  background-color: var(--panel);
+  color: var(--text-main);
+  border: 2px solid var(--brand2);
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: grab;
+  font-weight: 500;
+  user-select: none;
+  transition:
+    transform 0.1s,
+    box-shadow 0.1s;
+}
+
+.sorting-item:active {
+  cursor: grabbing;
+}
+
+.sorting-item.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
+}
+
+.sorting-item.correct {
+  background-color: var(--brand3); /* Green */
+  color: #000;
+  border-color: var(--brand6);
+  cursor: default;
+}
+
+.sorting-item.incorrect {
+  animation: shake 0.4s ease-in-out;
+  background-color: tomato;
+  color: white;
+  border-color: darkred;
+}
+
+/* The Drop Zones */
+.sorting-zones-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.sorting-zone {
+  flex: 1;
+  min-width: 200px;
+  background-color: var(--panel);
+  border: 2px solid var(--accordion-border);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sorting-zone-header {
+  background-color: var(--panel-alt);
+  padding: 10px;
+  text-align: center;
+  border-bottom: 2px solid var(--accordion-border);
+  border-radius: 4px 4px 0 0;
+}
+
+.sorting-zone-title {
+  font-family: "Tektur", sans-serif;
+  font-weight: 600;
+  color: var(--brand2);
+}
+
+.sorting-zone-hint {
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-top: 4px;
+}
+
+.sorting-zone-content {
+  padding: 15px;
+  min-height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: flex-start;
+  transition: background-color 0.2s;
+}
+
+.sorting-zone.drag-over .sorting-zone-content {
+  background-color: var(--hover-bg);
+  border-radius: 0 0 4px 4px;
+}
+
+.sorting-feedback {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  color: var(--brand6);
+  min-height: 24px;
+}

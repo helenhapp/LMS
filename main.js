@@ -1285,7 +1285,284 @@
   }
 
   // -----------------------------------------
-  // 🏁 7. INITIALIZATION (The Engine)
+  // 🗂️ 7. SORTING GAME MANAGER
+  // -----------------------------------------
+  class SortingGameManager {
+    constructor(moduleElement) {
+      this.module = moduleElement;
+      this.gameId = this.module.getAttribute("data-game-id") || "default";
+      this.pageId = window.location.pathname.replace(/[^a-zA-Z0-9]/g, "_");
+      this.storageKey = `lms_sort_${this.pageId}_${this.gameId}`;
+
+      // 1. Read JSON Configuration
+      const dataScript = this.module.querySelector(".sorting-data");
+      if (!dataScript) return;
+      try {
+        this.config = JSON.parse(dataScript.textContent);
+      } catch (error) {
+        console.error("Sorting Game JSON Error:", error);
+        return;
+      }
+
+      // 2. DOM Elements
+      this.bank = this.module.querySelector(".sorting-bank");
+      this.zonesContainer = this.module.querySelector(
+        ".sorting-zones-container",
+      );
+      this.feedbackEl = this.module.querySelector(".sorting-feedback");
+      this.resetBtn = this.module.querySelector(".sorting-reset-btn");
+
+      // State
+      this.draggedItem = null;
+
+      this.init();
+    }
+
+    init() {
+      this.buildUI();
+      this.setupDragEvents();
+
+      if (this.resetBtn) {
+        this.resetBtn.addEventListener("click", () => this.resetGame());
+      }
+    }
+
+    // Storage Methods
+    loadState() {
+      try {
+        const saved = localStorage.getItem(this.storageKey);
+        return saved ? JSON.parse(saved) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    saveState() {
+      const state = {};
+      // Iterate through all items and save their current location
+      this.module.querySelectorAll(".sorting-item").forEach((item) => {
+        const itemId = item.getAttribute("data-item-id");
+        const parentZone = item.closest(".sorting-zone");
+
+        if (parentZone) {
+          state[itemId] = parentZone.getAttribute("data-category");
+        } else {
+          state[itemId] = "bank";
+        }
+      });
+      localStorage.setItem(this.storageKey, JSON.stringify(state));
+    }
+
+    // Constructs the HTML dynamically based on the JSON config & Saved State
+    buildUI() {
+      this.bank.innerHTML = "";
+      this.zonesContainer.innerHTML = "";
+      this.feedbackEl.textContent = "";
+
+      const savedState = this.loadState();
+
+      // Create Zones
+      this.config.categories.forEach((category) => {
+        const zone = document.createElement("div");
+        zone.className = "sorting-zone";
+        zone.setAttribute("data-category", category.id);
+
+        zone.innerHTML = `
+          <div class="sorting-zone-header">
+            <div class="sorting-zone-title">${category.title}</div>
+            ${category.hint ? `<div class="sorting-zone-hint">${category.hint}</div>` : ""}
+          </div>
+          <div class="sorting-zone-content"></div>
+        `;
+        this.zonesContainer.appendChild(zone);
+      });
+
+      // Create Items (Shuffle them first)
+      const shuffledItems = [...this.config.items].sort(
+        () => Math.random() - 0.5,
+      );
+
+      shuffledItems.forEach((item) => {
+        const el = document.createElement("div");
+        el.className = "sorting-item";
+        el.textContent = item.text;
+        el.setAttribute("data-item-id", item.id);
+        el.setAttribute("data-correct-target", item.correctCategory);
+
+        const savedLocation = savedState[item.id] || "bank";
+
+        // Check if the item was already correctly sorted in a previous session
+        if (savedLocation !== "bank") {
+          const targetZoneContent = this.zonesContainer.querySelector(
+            `.sorting-zone[data-category="${savedLocation}"] .sorting-zone-content`,
+          );
+
+          if (targetZoneContent) {
+            el.draggable = false;
+            el.classList.add("correct");
+            targetZoneContent.appendChild(el);
+          } else {
+            // Fallback in case the JSON category was renamed/deleted but old storage exists
+            el.draggable = true;
+            this.bank.appendChild(el);
+          }
+        } else {
+          // Item belongs in the bank
+          el.draggable = true;
+          this.bank.appendChild(el);
+        }
+      });
+
+      // Check if they had already won in a previous session
+      this.checkWinCondition();
+    }
+
+    setupDragEvents() {
+      // 1. Setup Draggable Items
+      this.module.addEventListener("dragstart", (e) => {
+        if (e.target.classList.contains("sorting-item")) {
+          this.draggedItem = e.target;
+
+          // Ghost image clone logic
+          const ghost = e.target.cloneNode(true);
+          ghost.style.position = "absolute";
+          ghost.style.top = "-1000px";
+          ghost.style.background = "var(--panel)";
+          ghost.style.border = "2px solid var(--brand2)";
+          ghost.style.borderRadius = "20px";
+          ghost.style.color = "var(--text-main)";
+          ghost.style.padding = "8px 15px";
+          ghost.style.fontFamily = "inherit";
+          document.body.appendChild(ghost);
+
+          e.dataTransfer.setDragImage(ghost, 20, 20);
+
+          setTimeout(() => {
+            document.body.removeChild(ghost);
+            e.target.classList.add("dragging");
+          }, 0);
+
+          e.dataTransfer.setData(
+            "text/plain",
+            e.target.getAttribute("data-item-id"),
+          );
+        }
+      });
+
+      this.module.addEventListener("dragend", (e) => {
+        if (e.target.classList.contains("sorting-item")) {
+          e.target.classList.remove("dragging");
+          this.draggedItem = null;
+          this.removeDragOverClasses();
+        }
+      });
+
+      // 2. EVENT DELEGATION FOR DROP ZONES
+      this.module.addEventListener("dragenter", (e) => {
+        const zone =
+          e.target.closest(".sorting-zone") ||
+          e.target.closest(".sorting-bank");
+        if (zone) e.preventDefault();
+      });
+
+      this.module.addEventListener("dragover", (e) => {
+        const zone =
+          e.target.closest(".sorting-zone") ||
+          e.target.closest(".sorting-bank");
+        if (zone) {
+          e.preventDefault();
+          zone.classList.add("drag-over");
+        }
+      });
+
+      this.module.addEventListener("dragleave", (e) => {
+        const zone =
+          e.target.closest(".sorting-zone") ||
+          e.target.closest(".sorting-bank");
+        if (zone && !zone.contains(e.relatedTarget)) {
+          zone.classList.remove("drag-over");
+        }
+      });
+
+      this.module.addEventListener("drop", (e) => {
+        const zone =
+          e.target.closest(".sorting-zone") ||
+          e.target.closest(".sorting-bank");
+        if (!zone) return;
+
+        e.preventDefault();
+        this.removeDragOverClasses();
+
+        if (!this.draggedItem) return;
+
+        // Check if dropping back into the bank
+        if (zone.classList.contains("sorting-bank")) {
+          this.bank.appendChild(this.draggedItem);
+          this.draggedItem.classList.remove("correct", "incorrect");
+          this.saveState(); // Save state if returned to bank
+          return;
+        }
+
+        // Check if dropping into a category zone
+        if (zone.classList.contains("sorting-zone")) {
+          this.handleDropLogic(zone);
+        }
+      });
+    }
+
+    handleDropLogic(targetZone) {
+      const targetCategory = targetZone.getAttribute("data-category");
+      const correctCategory = this.draggedItem.getAttribute(
+        "data-correct-target",
+      );
+      const contentArea = targetZone.querySelector(".sorting-zone-content");
+
+      // Verify Correctness
+      if (targetCategory === correctCategory) {
+        // Correct drop!
+        contentArea.appendChild(this.draggedItem);
+        this.draggedItem.classList.remove("incorrect");
+        this.draggedItem.classList.add("correct");
+
+        // Lock the item in place
+        this.draggedItem.draggable = false;
+
+        this.saveState(); // Save progress!
+        this.checkWinCondition();
+      } else {
+        // Incorrect drop!
+        this.draggedItem.classList.add("incorrect");
+        setTimeout(() => {
+          if (this.draggedItem) {
+            this.draggedItem.classList.remove("incorrect");
+          }
+        }, 500);
+      }
+    }
+
+    checkWinCondition() {
+      const itemsInBank = this.bank.querySelectorAll(".sorting-item").length;
+      if (itemsInBank === 0) {
+        this.feedbackEl.textContent = "🎉 Все відсортовано правильно!";
+      }
+    }
+
+    removeDragOverClasses() {
+      this.module
+        .querySelectorAll(".drag-over")
+        .forEach((el) => el.classList.remove("drag-over"));
+    }
+
+    resetGame() {
+      // Clear the local storage for this specific game
+      localStorage.removeItem(this.storageKey);
+      // Rebuild the UI from scratch
+      this.buildUI();
+    }
+  }
+
+  // -----------------------------------------
+  // 🏁 8. INITIALIZATION (The Engine)
   // -----------------------------------------
   document.addEventListener("DOMContentLoaded", () => {
     const themeManager = new ThemeManager();
@@ -1321,5 +1598,9 @@
         clearDialog.close();
       });
     }
+
+    document.querySelectorAll(".sorting-game-module").forEach((module) => {
+      new SortingGameManager(module);
+    });
   });
 })(); // End of IIFE
