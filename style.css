@@ -2472,3 +2472,113 @@ code.long-code .hljs-ln td.hljs-ln-code {
   color: var(--brand6);
   min-height: 24px;
 }
+
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+/* 🌍 TRANSLATOR WIDGET */
+/* ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ - ✦ */
+
+.translator-module {
+  background-color: var(--soft-callout);
+  border: 1px solid var(--accordion-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.translator-header {
+  margin-bottom: 15px;
+}
+
+.translator-header h4 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--title);
+}
+
+.translator-header h4 img {
+  border: none;
+  margin: 0;
+  border-radius: 0;
+}
+
+.translator-lang-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--panel-alt);
+  padding: 8px 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 1px solid var(--accent);
+}
+
+.lang-source,
+.lang-target {
+  font-family: "Tektur", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--brand2);
+}
+
+.swap-lang-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 5px;
+  color: var(--text-soft);
+  transition:
+    transform 0.3s ease,
+    color 0.2s ease;
+  box-shadow: none;
+}
+
+.swap-lang-btn:hover {
+  background: transparent;
+  color: var(--accent-pop);
+}
+
+.translator-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.translator-input {
+  width: 100%;
+  padding: 12px 15px;
+  background-color: var(--code-bg);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.translator-input:focus {
+  outline: none;
+  border-color: var(--brand2);
+}
+
+.translate-btn {
+  width: 100%;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.translate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.translator-output {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: var(--panel);
+  border: 2px dashed var(--accent);
+  border-radius: 6px;
+  text-align: center;
+}

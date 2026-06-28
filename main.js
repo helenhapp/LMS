@@ -1301,7 +1301,176 @@
   }
 
   // -----------------------------------------
-  // 🗂️ 7. SORTING GAME MANAGER
+  // 🌍 7. TRANSLATOR MANAGER (MyMemory API)
+  // -----------------------------------------
+  class TranslatorManager {
+    constructor(moduleElement) {
+      this.module = moduleElement;
+
+      // 1. Get initial languages from HTML
+      this.sourceLang = this.module.getAttribute("data-source-lang") || "en";
+      this.targetLang = this.module.getAttribute("data-target-lang") || "uk";
+
+      // Language Display Names Map (Easy to expand later for Italian, etc.)
+      this.langNames = {
+        en: "Англійська",
+        uk: "Українська",
+        it: "Італійська",
+      };
+
+      // 2. DOM Elements
+      this.inputEl = this.module.querySelector(".translator-input");
+      this.btn = this.module.querySelector(".translate-btn");
+      this.outputEl = this.module.querySelector(".translator-output");
+      this.swapBtn = this.module.querySelector(".swap-lang-btn");
+
+      this.sourceLabel = this.module.querySelector(".lang-source");
+      this.targetLabel = this.module.querySelector(".lang-target");
+
+      this.init();
+    }
+
+    init() {
+      // Trigger translation
+      this.btn.addEventListener("click", () => this.translate());
+
+      this.inputEl.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          this.translate();
+        }
+      });
+
+      // Trigger Swap
+      if (this.swapBtn) {
+        this.swapBtn.addEventListener("click", () => this.swapLanguages());
+      }
+
+      this.updateLabels();
+    }
+
+    swapLanguages() {
+      // 1. Swap the language codes
+      const temp = this.sourceLang;
+      this.sourceLang = this.targetLang;
+      this.targetLang = temp;
+
+      // 2. Update the HTML attributes (optional, but good practice)
+      this.module.setAttribute("data-source-lang", this.sourceLang);
+      this.module.setAttribute("data-target-lang", this.targetLang);
+
+      // 3. Update the UI
+      this.updateLabels();
+
+      // 4. Animate the button for feedback
+      this.swapBtn.style.transform = "rotate(180deg)";
+      setTimeout(() => (this.swapBtn.style.transform = "rotate(0)"), 300);
+
+      // 5. Clear previous output if they swap
+      this.outputEl.style.display = "none";
+      this.outputEl.innerHTML = "";
+    }
+
+    updateLabels() {
+      if (this.sourceLabel)
+        this.sourceLabel.textContent =
+          this.langNames[this.sourceLang] || this.sourceLang;
+      if (this.targetLabel)
+        this.targetLabel.textContent =
+          this.langNames[this.targetLang] || this.targetLang;
+
+      // Update placeholder to hint what language to type
+      const sourceName =
+        this.langNames[this.sourceLang]?.toLowerCase() || this.sourceLang;
+      this.inputEl.placeholder = `Введіть слово (${sourceName})...`;
+    }
+
+    async translate() {
+      const text = this.inputEl.value.trim();
+      if (!text) return;
+
+      this.outputEl.style.display = "block";
+      this.outputEl.innerHTML = `<span style="color: var(--text-soft);">Перекладаю... ⏳</span>`;
+      this.btn.disabled = true;
+
+      const encodedText = encodeURIComponent(text);
+
+      // Використовуємо публічний клієнтський API Google Перекладача
+      // dt=t (запитує переклад)
+      // dt=bd (запитує словник з альтернативами, якщо це одне слово)
+      const apiUrl = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${this.sourceLang}&tl=${this.targetLang}&dt=t&dt=bd&q=${encodedText}`;
+
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        const data = await response.json();
+
+        // 1. Головний переклад (у Google він завжди лежить за індексом data[0][0][0])
+        const mainTranslation = data[0][0][0];
+
+        // 2. Шукаємо словникові альтернативи
+        let alternativesHTML = "";
+
+        // Google повертає словник у data[1], якщо користувач ввів одне слово
+        if (data[1] && data[1].length > 0) {
+          const alternatives = [];
+
+          // Перебираємо частини мови (іменник, дієслово тощо)
+          data[1].forEach((partOfSpeech) => {
+            // Властивість [2] містить масив альтернативних слів
+            if (partOfSpeech[2]) {
+              partOfSpeech[2].forEach((wordInfo) => {
+                const altWord = wordInfo[0];
+                // Перевіряємо, чи ввів користувач лише одне слово (без пробілів)
+                const isInputSingleWord = !text.trim().includes(" ");
+                const isAltSingleWord = !altWord.trim().includes(" ");
+
+                if (
+                  altWord &&
+                  altWord.toLowerCase() !== mainTranslation.toLowerCase()
+                ) {
+                  // Якщо шукаємо одне слово — відкидаємо з альтернатив цілі фрази (як-от "брати квіток")
+                  if (isInputSingleWord && !isAltSingleWord) {
+                    return; // Пропускаємо це слово і йдемо далі
+                  }
+
+                  alternatives.push(altWord.toLowerCase());
+                }
+              });
+            }
+          });
+
+          // Залишаємо лише унікальні слова і беремо перші 5
+          const uniqueAlts = [...new Set(alternatives)].slice(0, 5);
+
+          if (uniqueAlts.length > 0) {
+            alternativesHTML = `
+              <div style="margin-top: 12px; font-size: 13px; color: var(--text-soft);">Інші значення:</div>
+              <div style="font-size: 15px; color: var(--text-main); font-weight: 500;">
+                ${uniqueAlts.join(", ")}
+              </div>
+            `;
+          }
+        }
+
+        // 3. Виводимо результат
+        this.outputEl.innerHTML = `
+          <div style="font-size: 13px; color: var(--text-soft);">Переклад:</div>
+          <div style="font-size: 18px; font-weight: bold; color: var(--brand2);">${mainTranslation}</div>
+          ${alternativesHTML}
+        `;
+      } catch (error) {
+        console.error("Translation API Error:", error);
+        this.outputEl.innerHTML = `<span style="color: tomato;">❌ Помилка перекладу. Перевірте з'єднання.</span>`;
+      } finally {
+        this.btn.disabled = false;
+      }
+    }
+  }
+
+  // -----------------------------------------
+  // 🗂️ 8. SORTING GAME MANAGER
   // -----------------------------------------
   class SortingGameManager {
     constructor(moduleElement) {
@@ -1617,6 +1786,11 @@
 
     document.querySelectorAll(".sorting-game-module").forEach((module) => {
       new SortingGameManager(module);
+    });
+
+    // Ініціалізуємо всі перекладачі на сторінці
+    document.querySelectorAll(".translator-module").forEach((module) => {
+      new TranslatorManager(module);
     });
   });
 })(); // End of IIFE
