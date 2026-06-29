@@ -1941,7 +1941,7 @@ code.long-code .hljs-ln td.hljs-ln-code {
 }
 
 /* Зум картинок працює тільки на великих екранах */
-@media (min-width: 650px) {
+@media (min-width: 900px) {
   img.zoomable {
     cursor: zoom-in;
   }
