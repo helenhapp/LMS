@@ -114,8 +114,12 @@
           <label class="toggle-switch" aria-label="Перемикач теми">
             <input type="checkbox" id="theme-checkbox" />
             <span class="slider">
-              <span class="icon sun"><img src="./media/icons/stars.svg" /></span>
-              <span class="icon moon"><img src="./media/icons/moon.svg" /></span>
+              <span class="icon sun"
+                ><img src="./media/icons/stars.svg"
+              /></span>
+              <span class="icon moon"
+                ><img src="./media/icons/moon.svg"
+              /></span>
             </span>
           </label>
 
@@ -332,6 +336,47 @@ bob.forward(100)</code></pre>
 
             <hr />
 
+            <h3 id="goto">4.1. Переміщення в конкретну точку — goto</h3>
+
+            <p>
+              forward/backward рухають черепашку відносно того напрямку, куди
+              вона зараз дивиться. Але часто зручніше сказати: "перейди ось у цю
+              конкретну точку екрана" — незалежно від того, куди черепашка
+              дивилась раніше. Для цього є команда goto:
+            </p>
+
+            <pre><code class="language-python">bob.penup()
+bob.goto(100, 50)
+bob.pendown()</code></pre>
+
+            <p>
+              Тут 100 і 50 — це координати x і y, точно як на координатній
+              площині, яку ти знаєш з математики:
+            </p>
+
+            <ul>
+              <li>Центр екрана — це точка (0, 0)</li>
+              <li>x — рух вправо (додатне) чи вліво (від'ємне)</li>
+              <li>
+                y — рух вгору (додатне) чи вниз (від'ємне) — зверни увагу:
+                вгору, а не вниз, як буває в деяких інших бібліотеках!
+              </li>
+            </ul>
+
+            <p>
+              Наприклад, bob.goto(-100, -80) перемістить черепашку вліво і вниз
+              від центру.
+            </p>
+
+            <p>
+              Важливо: сама команда goto малює лінію, якщо ручка опущена
+              (pendown) — так само, як і forward. Тому, якщо хочеш перейти в
+              нову точку без лінії, не забудь penup() перед goto() і pendown()
+              після — так само, як ти вже робила з forward.
+            </p>
+
+            <hr />
+
             <h3 id="fill">5. Заливка фігури кольором</h3>
 
             <p>
@@ -544,6 +589,86 @@ bob.forward(100)</code></pre>
 
                 <img
                   src="./images/img_01_10.png"
+                  alt="code result"
+                  class="zoomable"
+                />
+              </div>
+            </details>
+
+            <details class="task" name="task1" open>
+              <summary><h4>Завдання 5</h4></summary>
+
+              <div>
+                <p>Напиши програму, яка:</p>
+
+                <ol>
+                  <li>
+                    Запитує у користувача (через input()) кількість сторін
+                    (<span class="accent">n</span>) многокутника і довжину
+                    сторони (<span class="accent">length</span>).
+                  </li>
+                  <li>
+                    Обчислює потрібний кут повороту черепашки (<span
+                      class="accent"
+                      >angle</span
+                    >).
+                  </li>
+                  <li>
+                    Малює правильний многокутник циклом
+                    <span class="accent">for</span>.
+                  </li>
+                </ol>
+
+                <img
+                  src="./images/img_01_11.png"
+                  alt="code result"
+                  class="zoomable"
+                />
+                <img
+                  src="./images/img_01_12.png"
+                  alt="code result"
+                  class="zoomable"
+                />
+              </div>
+            </details>
+
+            <details class="task" name="task1" open>
+              <summary><h4>Завдання 6</h4></summary>
+
+              <div>
+                <p>Цей код малює пʼятикутну зірку:</p>
+
+                <pre><code class="language-python">for i in range(5):
+    bob.forward(200)
+    bob.right(144)</code></pre>
+
+                <ol>
+                  <li>
+                    Поекспериментуй із цифрами в дужках, щоб вийшла зірка з
+                    більшою кількістю кутів.
+                  </li>
+                  <li>Зміни колір та товщину ліній і додай заливку.</li>
+                </ol>
+
+                <img
+                  src="./images/img_01_13.png"
+                  alt="code result"
+                  class="zoomable"
+                />
+              </div>
+            </details>
+
+            <details class="task" name="task1" open>
+              <summary><h4>Завдання 7</h4></summary>
+
+              <div>
+                <p>
+                  Намалюй три маленькі квадратики (сторона 30) у трьох різних
+                  місцях екрана, переміщаючись між ними без зайвих ліній.
+                </p>
+
+                <img
+                  src="./images/img_01_14.png"
                   alt="code result"
                   class="zoomable"
                 />
